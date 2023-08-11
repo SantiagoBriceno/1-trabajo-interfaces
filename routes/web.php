@@ -46,4 +46,9 @@ Route::middleware('auth.admin')->get('admin', function () {
     return Inertia::render('HomeAdmin', compact('users'));
 })->name('dashboard2');
 
+Route::middleware('auth.admin')->get('users', function () {
+    $user = User::all();
+    return Inertia::render('pages-admin/UsersList', compact('user'));
+})->name('User');
+
 require __DIR__ . '/auth.php';

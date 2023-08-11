@@ -1,16 +1,10 @@
 import {
   mdiAccountCircle,
   mdiMonitor,
-  mdiGithub,
   mdiLock,
-  mdiAlertCircle,
   mdiSquareEditOutline,
   mdiTable,
-  mdiViewList,
-  mdiTelevisionGuide,
-  mdiResponsive,
-  mdiPalette,
-  mdiReact,
+  mdiViewList
 } from "@mdi/js";
 
 export default [
@@ -21,29 +15,27 @@ export default [
     label: "Dashboard",
   },
   {
-    route: "tables",
-    label: "Tables",
+    label: "Formularios",
+    icon: mdiViewList,
+    menu: [
+      {
+        label: "Normal",
+        icon: mdiSquareEditOutline,
+        route: "#" //Colocar la tuta del primer Formulario
+      },
+      {
+        label: "Wizard",
+        icon: mdiSquareEditOutline,
+        route: "#" //Colocar la ruta del segundo Formulario
+      },
+    ],
+  },
+
+  {
+    href: "users",
+    route: 'users', // Verificar que sea ka ruta de mostrar las tablas
+    label: "Usuarios",
     icon: mdiTable,
-  },
-  {
-    route: "forms",
-    label: "Forms",
-    icon: mdiSquareEditOutline,
-  },
-  {
-    route: "ui",
-    label: "UI",
-    icon: mdiTelevisionGuide,
-  },
-  {
-    route: "/responsive",
-    label: "Responsive",
-    icon: mdiResponsive,
-  },
-  {
-    route: "/",
-    label: "Styles",
-    icon: mdiPalette,
   },
   {
     route: "/profile",
@@ -55,33 +47,5 @@ export default [
     label: "Login",
     icon: mdiLock,
   },
-  {
-    route: "/error",
-    label: "Error",
-    icon: mdiAlertCircle,
-  },
-  {
-    label: "Dropdown",
-    icon: mdiViewList,
-    menu: [
-      {
-        label: "Item One",
-      },
-      {
-        label: "Item Two",
-      },
-    ],
-  },
-  {
-    href: "https://github.com/justboil/admin-one-vue-tailwind",
-    label: "GitHub",
-    icon: mdiGithub,
-    target: "_blank",
-  },
-  {
-    href: "https://github.com/justboil/admin-one-react-tailwind",
-    label: "React version",
-    icon: mdiReact,
-    target: "_blank",
-  },
+  
 ];

@@ -1,11 +1,10 @@
 <script setup>
-import { computed, ref, onMounted } from "vue";
-import { useMainStore } from "@/Stores/main";
-import  ShowTable  from "@/components/ShowTable.vue";
 import * as chartConfig from "@/components/Charts/chart.config.js";
+import { computed, ref, onMounted } from "vue";
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/Layouts/LayoutAuthenticated.vue";
 import { Head } from "@inertiajs/vue3";
+import ShowTable from "@/components/front/ShowTable.vue";
 
 const chartData = ref(null);
 
@@ -21,15 +20,14 @@ defineProps({
   users: Array
  });
 
-
 </script>
 
 <template>
   <LayoutAuthenticated>
-    <Head title="Dashboard2" />
+    <Head title="Lista de usuarios" />
     <SectionMain>
-      
-      <h1>HOLA MUNDO SOY ADMIN</h1>
+      <h1>HOLA MUNDO SOY ADMIN Y ESTA ES LA PAGINA DE LISTA DE USUARIOS</h1>
+      <ShowTable :users = 'users'/>
     </SectionMain>
   </LayoutAuthenticated>
 </template>
