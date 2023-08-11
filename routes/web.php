@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,5 +40,10 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth.admin')->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 });
+
+Route::middleware('auth.admin')->get('admin', function () {
+    $users = User::all();
+    return Inertia::render('HomeAdmin', compact('users'));
+})->name('dashboard2');
 
 require __DIR__ . '/auth.php';
