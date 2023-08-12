@@ -80,7 +80,7 @@ const menuClick = (event, item) => {
         </NavBarItemPlain>
         <NavBarItemPlain use-margin>
           <FormControl
-            placeholder="Search (ctrl+k)"
+            placeholder="Buscar (ctrl+k)"
             ctrl-k-focus
             transparent
             borderless
@@ -96,12 +96,12 @@ const menuClick = (event, item) => {
       />
       <slot />
       <FooterBar>
-        Get more with
+        La mejor opción para la administración de tu negocio.
         <a
           href="https://tailwind-vue.justboil.me/"
           target="_blank"
           class="text-blue-600"
-          >Premium version</a
+          ></a
         >
       </FooterBar>
     </div>

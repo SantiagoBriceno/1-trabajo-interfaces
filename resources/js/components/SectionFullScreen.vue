@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import { useStyleStore } from "@/stores/style";
+import { useStyleStore } from "@/Stores/style";
 import {
   gradientBgPurplePink,
   gradientBgDark,

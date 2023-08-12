@@ -7,16 +7,31 @@ module.exports = {
         "./resources/views/**/*.blade.php",
         "./resources/js/**/*.vue",
         "./resources/js/**/*.js",
-      ],
+    ],
     darkMode: "class", // or 'media' or 'class'
     theme: {
         asideScrollbars: {
             light: "light",
             gray: "gray",
         },
+        container: {
+            center: true,
+            padding: {
+                DEFAULT: "1rem",
+                sm: "2rem",
+                lg: "4rem",
+            },
+        },
         extend: {
             zIndex: {
                 "-1": "-1",
+            },
+            colors: {
+                primary: {
+                    100: "#06C2AE",
+                    200: "#02889B",
+                },
+                secondary: "#FF693A",
             },
             flexGrow: {
                 5: "5",

@@ -48,7 +48,7 @@ const transactionBarItems = computed(() => mainStore.history);
     <SectionMain>
       <SectionTitleLineWithButton
         :icon="mdiChartTimelineVariant"
-        title="Overview"
+        title="Estadísticas"
         main
       >
         <BaseButton
@@ -118,7 +118,7 @@ const transactionBarItems = computed(() => mainStore.history);
 
       <SectionBannerStarOnGitHub class="mt-6 mb-6" />
 
-      <SectionTitleLineWithButton :icon="mdiChartPie" title="Trends overview">
+      <SectionTitleLineWithButton :icon="mdiChartPie" title="Gráfica de ganancia">
         <BaseButton
           :icon="mdiReload"
           color="whiteDark"
@@ -132,7 +132,7 @@ const transactionBarItems = computed(() => mainStore.history);
         </div>
       </CardBox>
 
-      <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="Clients" />
+      <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="Clientes" />
 
       <NotificationBar color="info" :icon="mdiMonitorCellphone">
         <b>Responsive table.</b> Collapses on mobile

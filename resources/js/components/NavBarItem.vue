@@ -3,7 +3,7 @@ import { mdiChevronUp, mdiChevronDown } from "@mdi/js";
 //import { RouterLink } from "vue-router";
 import { Link } from "@inertiajs/vue3";
 import { computed, ref, onMounted, onBeforeUnmount } from "vue";
-import { useStyleStore } from "@/stores/style.js";
+import { useStyleStore } from "@/Stores/style.js";
 import BaseIcon from "@/components/BaseIcon.vue";
 import UserAvatarCurrentUser from "@/components/UserAvatarCurrentUser.vue";
 import NavBarMenuList from "@/components/NavBarMenuList.vue";
@@ -97,7 +97,7 @@ onBeforeUnmount(() => {
     :is="is"
     v-else
     ref="root"
-    class="block lg:flex items-center relative cursor-pointer"
+    class="block lg:flex items-center relative cursor-pointer w-auto"
     :class="componentClass"
     :href="itemHref"
     :target="item.target ?? null"

@@ -19,12 +19,12 @@ export default [
     icon: mdiViewList,
     menu: [
       {
-        label: "Normal",
+        label: "Company",
         icon: mdiSquareEditOutline,
         route: "#" //Colocar la tuta del primer Formulario
       },
       {
-        label: "Wizard",
+        label: "W-Company",
         icon: mdiSquareEditOutline,
         route: "#" //Colocar la ruta del segundo Formulario
       },

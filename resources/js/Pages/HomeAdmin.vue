@@ -1,7 +1,6 @@
 <script setup>
 import { computed, ref, onMounted } from "vue";
 import { useMainStore } from "@/Stores/main";
-import  ShowTable  from "@/components/ShowTable.vue";
 import * as chartConfig from "@/components/Charts/chart.config.js";
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/Layouts/LayoutAuthenticated.vue";

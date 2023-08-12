@@ -39,7 +39,7 @@ class AuthenticatedSessionController extends Controller
         $rol = $user->role;
 
         if ($rol == 'user') {
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return redirect()->intended(RouteServiceProvider::INDEX);
         } else if ($rol == 'admin') {
             return redirect()->intended(RouteServiceProvider::ADMINVIEW);
         }
@@ -58,6 +58,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/index');
     }
 }
