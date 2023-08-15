@@ -14,6 +14,8 @@ defineProps({
     },
 });
 
+let deleteCompanyCondition = ref(false);
+
 let editData = useForm({
     name: null,
     rif: null,
@@ -84,7 +86,9 @@ const verifyField = (field) => {
             if (editData.phone == null) {
                 return null;
             } else if (
-                /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(editData.phone)
+                /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(
+                    editData.phone
+                )
             ) {
                 return true;
             } else {
@@ -96,7 +100,9 @@ const verifyField = (field) => {
             if (editData.phone2 == null) {
                 return null;
             } else if (
-                /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(editData.phone2)
+                /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(
+                    editData.phone2
+                )
             ) {
                 return true;
             } else {
@@ -125,7 +131,7 @@ const verifyField = (field) => {
             }
             break;
 
-        case "direccion":   
+        case "direccion":
             if (editData.direccion == null) {
                 return null;
             } else if (editData.direccion.length < 3) {
@@ -183,7 +189,7 @@ const verifyFormEdit = () => {
                 return false;
             }
         }
-        return true
+        return true;
     }
 };
 
@@ -206,13 +212,12 @@ const editCompany = (event) => {
 const deleteCompany = (event) => {
     event.preventDefault();
 
-   route("company.delete"), {
+    router.delete(route("company.delete"), {
         preserveScroll: true,
         onSuccess: () => {
-            editData.reset();
-            editData.status = true;
+            deleteCompanyCondition.value = true;
         },
-    }
+    });
 };
 
 const countries = ["Germany", "Spain", "Norway", "England", "Venezuela"];
@@ -309,6 +314,25 @@ const countries = ["Germany", "Spain", "Norway", "England", "Venezuela"];
                                     ></path></svg></span
                             ><span>Actualizado</span>
                         </div>
+                        <div
+                            v-else-if="deleteCompanyCondition"
+                            class="inline-flex items-center capitalize leading-none text-sm border rounded-full py-1.5 px-4 bg-blue-500 border-blue-500 text-white"
+                            bis_skin_checked="1"
+                        >
+                            <span
+                                class="inline-flex justify-center items-center w-4 h-4 mr-2"
+                                ><svg
+                                    viewBox="0 0 24 24"
+                                    width="16"
+                                    height="16"
+                                    class="inline-block"
+                                >
+                                    <path
+                                        fill="currentColor"
+                                        d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"
+                                    ></path></svg></span
+                            ><span>Eliminado</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -359,7 +383,7 @@ const countries = ["Germany", "Spain", "Norway", "England", "Venezuela"];
                                 id="company-name"
                                 :class="{
                                     valid: verifyField('rif') == true,
-                                    inValid:verifyField('rif') == false,
+                                    inValid: verifyField('rif') == false,
                                 }"
                                 type="text"
                                 :placeholder="placeholder.rif"
@@ -513,7 +537,7 @@ const countries = ["Germany", "Spain", "Norway", "England", "Venezuela"];
                                     </option>
                                 </select>
                                 <p
-                                    v-if=" verifyField('pais') == false"
+                                    v-if="verifyField('pais') == false"
                                     class="text-red-500 text-xs italic"
                                 >
                                     Escoge un pais.
@@ -546,7 +570,7 @@ const countries = ["Germany", "Spain", "Norway", "England", "Venezuela"];
                                     v-model="editData.estado"
                                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="estado"
-                                    :class = "{
+                                    :class="{
                                         valid: verifyField('estado') == true,
                                         inValid: verifyField('estado') == false,
                                     }"
@@ -596,7 +620,7 @@ const countries = ["Germany", "Spain", "Norway", "England", "Venezuela"];
                                 id="direction"
                                 type="text"
                                 :placeholder="placeholder.direccion"
-                                :class = "{
+                                :class="{
                                     valid: verifyField('direccion') == true,
                                     inValid: verifyField('direccion') == false,
                                 }"

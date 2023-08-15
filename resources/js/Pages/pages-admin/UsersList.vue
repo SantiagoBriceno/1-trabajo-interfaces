@@ -26,7 +26,6 @@ defineProps({
   <LayoutAuthenticated>
     <Head title="Lista de usuarios" />
     <SectionMain>
-      <h1>HOLA MUNDO SOY ADMIN Y ESTA ES LA PAGINA DE LISTA DE USUARIOS</h1>
       <ShowTable :users = 'users'/>
     </SectionMain>
   </LayoutAuthenticated>

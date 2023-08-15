@@ -1,16 +1,24 @@
 <script setup>
-import { Head, useForm } from "@inertiajs/vue3";
+import { Head, router, useForm } from "@inertiajs/vue3";
 import LayoutAuthenticated from "@/Layouts/LayoutAuthenticated.vue";
 import SectionMain from "@/components/SectionMain.vue";
 import { FormWizard, TabContent } from "vue3-form-wizard";
 import "../../../css/index.css";
 import { ref, computed } from "vue";
+import { countries, states } from "../../../countries";
+import BaseButton from "@/components/BaseButton.vue";
+import BaseButtons from "@/components/BaseButtons.vue";
+import CardBoxModal from "@/components/CardBoxModal.vue";
+import { mdiTrashCan } from "@mdi/js";
 
+const isModalDangerActive = ref(false);
 defineProps({
     empresa: {
         type: Array,
     },
 });
+
+let deleteCompanyCondition = ref(false);
 
 let editData = useForm({
     name: null,
@@ -24,6 +32,21 @@ let editData = useForm({
     direccion: null,
     status: false,
 });
+
+let statesOptions = ref([]);
+
+let countrieSelected = () => {
+    const selectedCountrie = editData.pais;
+    countries.forEach((countrie) => {
+        if (countrie.name == selectedCountrie) {
+            editData.phone = "+" + countrie.tlf;
+        }
+    });
+
+    console.log(editData.phone);
+    statesOptions = states[selectedCountrie];
+    console.log(statesOptions);
+};
 
 let editInput = ref([]);
 
@@ -43,9 +66,7 @@ const verifyField = (field) => {
         case "rif":
             if (editData.rif == null) {
                 return null;
-            } else if (
-                /^([VEJPGvejpg]{1})-([0-9]{8})-([0-9]{2}$)/.test(editData.rif)
-            ) {
+            } else if (/^([0-9]{8})-([0-9]{1}$)/.test(editData.rif)) {
                 return true;
             } else {
                 return false;
@@ -84,7 +105,9 @@ const verifyField = (field) => {
             if (editData.phone == null) {
                 return null;
             } else if (
-              /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(editData.phone)
+                /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(
+                    editData.phone
+                )
             ) {
                 return true;
             } else {
@@ -96,7 +119,9 @@ const verifyField = (field) => {
             if (editData.phone2 == null) {
                 return null;
             } else if (
-              /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(editData.phone2)
+                /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(
+                    editData.phone2
+                )
             ) {
                 return true;
             } else {
@@ -128,7 +153,7 @@ const verifyField = (field) => {
         case "direccion":
             if (editData.direccion == null) {
                 return null;
-            } else if (editData.direccion.length < 3) {
+            } else if (editData.direccion.length < 5) {
                 return false;
             } else {
                 return true;
@@ -144,9 +169,9 @@ const verifyStep = () => {
     if (editInput.value.length == 0) {
         return true;
     } else {
-        for(let i = 0; i < editInput.value.length; i++){
-            if(verifyField(editInput.value[i]) == false){
-                return false
+        for (let i = 0; i < editInput.value.length; i++) {
+            if (verifyField(editInput.value[i]) == false) {
+                return false;
             }
         }
 
@@ -155,32 +180,107 @@ const verifyStep = () => {
 };
 
 const nextStep = () => {
-  console.log('alskjdlaksjd')
-  return verifyStep();
-}
+    console.log("alskjdlaksjd");
+    return verifyStep();
+};
 
-const rifHelper = computed({
-  
-})
+const rifHelper = computed(() => {
+    if (editData.rif.length == 8) {
+        editData.rif = editData.rif + "-";
+    }
+});
+
+const verifyFormRegister = () => {
+    if (
+        verifyField("name") == true &&
+        verifyField("rif") == true &&
+        verifyField("email") == true &&
+        (editData.email2 ? verifyField("email2") : true) == true &&
+        verifyField("phone") == true &&
+        (editData.phone2 ? verifyField("phone2") : true) == true &&
+        verifyField("pais") == true &&
+        verifyField("estado") == true &&
+        verifyField("direccion") == true
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
+const verifyFormEdit = () => {
+    if (editInput.value.length == 0) {
+        return false;
+    } else {
+        for (let i = 0; i < editInput.value.length; i++) {
+            if (verifyField(editInput.value[i]) == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
 
 function onComplete() {
     switch (onCompleteCondition.value) {
-      case true:
-        console.log('aqui deberia registrar con estos datos', editData)
-      
-        break;
-
-      default:
-        console.log('aqui deberia actualizar con estos datos', editData)
-        break;
+        case true:
+            if (verifyFormRegister())
+                editData.put(route("Company.wizard.register"), {
+                    preserveScroll: true,
+                    onSuccess: () => {
+                        editData.reset();
+                        editData.status = true;
+                    },
+                });
+            else {
+                console.log("ta malo");
+            }
+            break;
+        default:
+            if (verifyFormEdit()) {
+                editData.patch(route("company.wizard.edit"), {
+                    preserveScroll: true,
+                    onSuccess: () => {
+                        editData.reset();
+                        editData.status = true;
+                    },
+                });
+            }
+            break;
     }
-    alert("Yay. Done!");
+    alert("Cambios actualizados");
 }
+
+const deleteCompany = () => {
+    router.delete(route("company.wizard.delete"), {
+        preserveScroll: true,
+        onSuccess: () => {
+            deleteCompanyCondition.value = true;
+        },
+    });
+}
+
+
 </script>
 
-<template>
-    {{
-        empresa == undefined ? onCompleteCondition = true : onCompleteCondition = false,
+<template> 
+    <CardBoxModal
+        @confirm ="deleteCompany"
+        v-model="isModalDangerActive"
+        title="Por favor, confirma"
+        button="danger"
+        button-label="Eliminar"
+        has-cancel
+    >
+
+    
+        <p>Estas apunto de <b> Eliminar la empresa </b></p>
+        <p>Por favor, confirma</p>
+    </CardBoxModal>
+    {{ 
+        (empresa == undefined
+            ? (onCompleteCondition = true)
+            : (onCompleteCondition = false),
         (placeholder = {
             name: empresa == undefined ? "Example SA" : empresa[0].name,
             rif:
@@ -203,7 +303,7 @@ function onComplete() {
                 empresa == undefined
                     ? "Una dirección válida"
                     : empresa[0].direccion,
-        })
+        }))
     }}
     <Head title="Mi Empresa" />
     <LayoutAuthenticated>
@@ -259,6 +359,7 @@ function onComplete() {
                             class="inline-flex items-center capitalize leading-none text-sm border rounded-full py-1.5 px-4 bg-blue-500 border-blue-500 text-white"
                             bis_skin_checked="1"
                         >
+                        
                             <span
                                 class="inline-flex justify-center items-center w-4 h-4 mr-2"
                                 ><svg
@@ -273,12 +374,34 @@ function onComplete() {
                                     ></path></svg></span
                             ><span>Actualizado</span>
                         </div>
+
+                        <div v-else-if="deleteCompanyCondition"
+                            class="inline-flex items-center capitalize leading-none text-sm border rounded-full py-1.5 px-4 bg-blue-500 border-blue-500 text-white"
+                            bis_skin_checked="1">
+                            <span
+                                class="inline-flex justify-center items-center w-4 h-4 mr-2"
+                                ><svg
+                                    viewBox="0 0 24 24"
+                                    width="16"
+                                    height="16"
+                                    class="inline-block"
+                                >
+                                    <path
+                                        fill="currentColor"
+                                        d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"
+                                    ></path></svg></span
+                            ><span>Eliminado</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <FormWizard @on-complete="onComplete" color="#094899">
-                <TabContent title="Datos de la empresa" icon="fa fa-city" v-bind:beforeChange="nextStep">
+                <TabContent
+                    title="Datos de la empresa"
+                    icon="fa fa-city"
+                    v-bind:beforeChange="nextStep"
+                >
                     <!-- FORMULARIO -->
 
                     <div class="flex flex-wrap -mx-3 mb-6">
@@ -307,6 +430,7 @@ function onComplete() {
                                         </svg>
                                     </span>
                                     <input
+                                        :autofocus="onCompleteCondition"
                                         v-on:change="editInput.push('name')"
                                         v-model="editData.name"
                                         type="text"
@@ -341,9 +465,10 @@ function onComplete() {
                                     <span
                                         class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600"
                                     >
-                                        J-
+                                        J -
                                     </span>
                                     <input
+                                        v-on:keyup="rifHelper"
                                         v-on:change="editInput.push('rif')"
                                         v-model="editData.rif"
                                         type="text"
@@ -463,6 +588,81 @@ function onComplete() {
                             </p>
                         </div>
                     </div>
+                </TabContent>
+                <TabContent title="Dirección" icon="fa fa-map-marker">
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <!-- ESTE DIV CONTIENE EL INPUT DEL PAIS -->
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label
+                                for="countries"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >Selecciona el país</label
+                            >
+                            <select
+                                v-on:change="
+                                    editInput.push('pais'), countrieSelected()
+                                "
+                                v-model="editData.pais"
+                                id="countries"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                :class="{
+                                    valid: verifyField('pais') == true,
+                                    inValid: verifyField('pais') == false,
+                                }"
+                            >
+                                <option :value="null" selected>
+                                    Escoge un Pais
+                                </option>
+                                <option
+                                    v-for="countrie in countries"
+                                    :value="countrie.name"
+                                >
+                                    {{ countrie.name }}
+                                </option>
+                            </select>
+                            <p
+                                v-if="verifyField('pais') == false"
+                                class="text-red-500 text-xs italic"
+                            >
+                                Escoge un pais.
+                            </p>
+                        </div>
+
+                        <!-- ESTE DIV CONTIENE EL INPUT DE LA CIUDAD -->
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label
+                                for="countries"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >Selecciona el estado</label
+                            >
+                            <select
+                                v-on:change="editInput.push('estado')"
+                                v-model="editData.estado"
+                                id="countries"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                :class="{
+                                    valid: verifyField('estado') == true,
+                                    inValid: verifyField('estado') == false,
+                                }"
+                            >
+                                <option :value="null" selected>
+                                    Selecciona un estado
+                                </option>
+                                <option
+                                    v-for="statesOption in statesOptions"
+                                    :value="statesOption"
+                                >
+                                    {{ statesOption }}
+                                </option>
+                            </select>
+                            <p
+                                v-if="verifyField('estado') == false"
+                                class="text-red-500 text-xs italic"
+                            >
+                                escoge un estado.
+                            </p>
+                        </div>
+                    </div>
 
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <!-- ESTE DIV CONTIENE EL INPUT DEL TLF 1-->
@@ -553,69 +753,6 @@ function onComplete() {
                             </p>
                         </div>
                     </div>
-                </TabContent>
-                <TabContent title="Dirección" icon="fa fa-map-marker">
-                    <div class="flex flex-wrap -mx-3 mb-6">
-                        <!-- ESTE DIV CONTIENE EL INPUT DEL PAIS -->
-                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label
-                                for="countries"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                >Selecciona el país</label
-                            >
-                            <select
-                                v-on:change="editInput.push('pais')"
-                                v-model="editData.pais"
-                                id="countries"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                :class="{
-                                    valid: verifyField('pais') == true,
-                                    inValid: verifyField('pais') == false,
-                                }"
-                            >
-                                <option>United States</option>
-                                <option>Canada</option>
-                                <option>France</option>
-                                <option>Germany</option>
-                            </select>
-                            <p
-                                v-if="verifyField('pais') == false"
-                                class="text-red-500 text-xs italic"
-                            >
-                                Escoge un pais.
-                            </p>
-                        </div>
-
-                        <!-- ESTE DIV CONTIENE EL INPUT DE LA CIUDAD -->
-                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label
-                                for="countries"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                >Selecciona el estado</label
-                            >
-                            <select
-                                v-on:change="editInput.push('estado')"
-                                v-model="editData.estado"
-                                id="countries"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                :class="{
-                                    valid: verifyField('estado') == true,
-                                    inValid: verifyField('estado') == false,
-                                }"
-                            >
-                                <option>United States</option>
-                                <option>Canada</option>
-                                <option>France</option>
-                                <option>Germany</option>
-                            </select>
-                            <p
-                                v-if="verifyField('estado') == false"
-                                class="text-red-500 text-xs italic"
-                            >
-                                escoge un estado.
-                            </p>
-                        </div>
-                    </div>
 
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full px-3">
@@ -638,15 +775,25 @@ function onComplete() {
                                 }"
                             />
                             <p
-                                    v-if="verifyField('direccion') == false"
-                                    class="text-red-500 text-xs italic"
-                                >
-                                    Ingresa una dirección válida Por favor.
-                                </p>
+                                v-if="verifyField('direccion') == false"
+                                class="text-red-500 text-xs italic"
+                            >
+                                Ingresa una dirección válida Por favor.
+                            </p>
                         </div>
                     </div>
                 </TabContent>
             </FormWizard>
+
+            <BaseButtons v-if = '(empresa == undefined) == false ' type="justify-center lg:justify-start">
+                <BaseButton
+                    label="Borrar empresa"
+                    color="danger"
+                    :icon="mdiTrashCan"
+                    big
+                    @click="isModalDangerActive = true"
+                />
+            </BaseButtons>
         </SectionMain>
     </LayoutAuthenticated>
 </template>

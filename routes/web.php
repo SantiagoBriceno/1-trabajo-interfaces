@@ -74,7 +74,7 @@ Route::middleware('auth.admin')->get('users', function () {
 Route::middleware('auth.admin')->get('company', function () {
     $empresa = Empresa::all();
     if (count($empresa) == 0) {
-        return Inertia::render('pages-admin/createCompany', []);
+        return Inertia::render('pages-admin/createCompany2', []);
     }else{
         return Inertia::render('pages-admin/createCompany2', compact('empresa'));
     }
@@ -119,19 +119,77 @@ Route::middleware('auth.admin')->patch('company', function () {
 //Ruta para eliminar una empresa
 Route::middleware('auth.admin')->delete('company', function () {
     $empresa = Empresa::all()->first();
-    $empresa->delete();
-    return redirect()->route('Company');
+    if ($empresa == null) {
+        return redirect()->route('company/wizard');
+    }else{
+        $empresa->delete();
+        return redirect()->route('company/wizard');}
+    
 })->name('company.delete');
 
 //RUTA PARA EL REGISTRO DE UNA EMPRESA EN UN FORMULARIO TIPO WIZARD
-Route::middleware('auth.admin')->get('company/wizard/register', function () {
+Route::middleware('auth.admin')->get('company/wizard', function () {
     $empresa = Empresa::all();
     if (count($empresa) == 0) {
         return Inertia::render('pages-admin/CreateCompanyWizard', []);
     }else{
         return Inertia::render('pages-admin/CreateCompanyWizard', compact('empresa'));
     }
+})->name('Company.wizard');
+
+Route::middleware('auth.admin')->put('company/wizard', function () {
+    $empresa = new Empresa();
+    $empresa->name = request()->name;
+    $empresa->rif = request()->rif;
+    $empresa->email = request()->email;
+    $empresa->email2 = request()->email2;
+    $empresa->phone = request()->phone;
+    $empresa->phone2 = request()->phone2;
+    $empresa->pais = request()->pais;
+    $empresa->estado = request()->estado;
+    $empresa->direccion = request()->direccion;
+    $empresa->save();
+    return redirect()->route('Company.wizard');
 })->name('Company.wizard.register');
+
+Route::middleware('auth.admin')->patch('company', function () {
+    //Obtengo la unica empresa que esta registrada
+    $empresa = Empresa::all()->first();
+
+    //Actualizo los datos con los campos no nulos de la request
+    $empresa->name = request()->name ?? $empresa->name;
+    $empresa->rif = request()->rif ?? $empresa->rif;
+    $empresa->email = request()->email ?? $empresa->email;
+    $empresa->email2 = request()->email2 ?? $empresa->email2;
+    $empresa->phone = request()->phone ?? $empresa->phone;
+    $empresa->phone2 = request()->phone2 ?? $empresa->phone2;
+    $empresa->pais = request()->pais ?? $empresa->pais;
+    $empresa->estado = request()->estado ?? $empresa->estado;
+    $empresa->direccion = request()->direccion ?? $empresa->direccion;
+    $empresa->save();
+    return redirect()->route('Company.wizard');
+})->name('company.wizard.edit');
+
+Route::middleware('auth.admin')->get('company/Profile', function () {
+    $empresa = Empresa::all();
+    if (count($empresa) == 0) {
+        return Inertia::render('pages-admin/CreateCompanyWizard', []);
+    }else{
+        return Inertia::render('pages-admin/CompanyProfile', compact('empresa'));
+    }
+})->name('Company.wizard');
+
+//RUTA PARA ELIMINAR LA COMPANY desde Wizard
+Route::middleware('auth.admin')->delete('company/wizard', function () {
+    $empresa = Empresa::all()->first();
+    if ($empresa == null) {
+        return redirect()->route('company/wizard');
+    }else{
+        $empresa->delete();
+        return redirect()->route('company/wizard');}
+    
+})->name('company.wizard.delete');
+
 
 
 require __DIR__ . '/auth.php';

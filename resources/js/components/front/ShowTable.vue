@@ -5,7 +5,7 @@ import  Table  from "@/components/front/Table.vue";
 const contenido = {
     title: "Contenido de la tabla",
     content:
-        "En esta tabla encontraremos todos los usuarios registrados en la base de datos como administradores o clientes respectivamente",
+        "En esta tabla encontraremos todos los clientes registrados en la aplicación",
 };
 
 defineProps({

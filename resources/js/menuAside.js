@@ -1,16 +1,14 @@
 import {
   mdiAccountCircle,
   mdiMonitor,
-  mdiLock,
   mdiSquareEditOutline,
   mdiTable,
   mdiViewList
 } from "@mdi/js";
 
 export default [
-  'General', 
   {
-    route: "dashboard",
+    href: "/dashboard",
     icon: mdiMonitor,
     label: "Dashboard",
   },
@@ -19,20 +17,20 @@ export default [
     icon: mdiViewList,
     menu: [
       {
-        label: "Company",
+        label: "Normal",
         icon: mdiSquareEditOutline,
-        route: "#" //Colocar la tuta del primer Formulario
+        href: "/company" //Colocar la tuta del primer Formulario
       },
       {
-        label: "W-Company",
+        label: "Wizard",
         icon: mdiSquareEditOutline,
-        route: "#" //Colocar la ruta del segundo Formulario
+        href: "/company/wizard" //Colocar la ruta del segundo Formulario
       },
     ],
   },
 
   {
-    href: "users",
+    href: "/users",
     route: 'users', // Verificar que sea ka ruta de mostrar las tablas
     label: "Usuarios",
     icon: mdiTable,
@@ -41,11 +39,6 @@ export default [
     route: "/profile",
     label: "Profile",
     icon: mdiAccountCircle,
-  },
-  {
-    route: "/login",
-    label: "Login",
-    icon: mdiLock,
   },
   
 ];

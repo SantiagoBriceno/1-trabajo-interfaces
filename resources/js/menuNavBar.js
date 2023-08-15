@@ -3,6 +3,7 @@ import {
   mdiClockOutline,
   mdiCloud,
   mdiCrop,
+  mdiDomain,
   mdiAccount,
   mdiCogOutline,
   mdiEmail,
@@ -10,6 +11,8 @@ import {
   mdiThemeLightDark,
   mdiGithub,
   mdiReact,
+  mdiFormSelect,
+  mdiAccountGroup
 } from "@mdi/js";
 
 export default [
@@ -18,19 +21,20 @@ export default [
     label: "Acceso Rápido",
     menu: [
       {
-        icon: mdiClockOutline,
-        label: "Item One",
+        icon: mdiDomain,
+        label: "Mi empresa",
       },
       {
-        icon: mdiCloud,
-        label: "Item Two",
+        icon: mdiAccountGroup,
+        label: "Mis clientes",
+        href: "/users",
       },
       {
         isDivider: true,
       },
       {
-        icon: mdiCrop,
-        label: "Item Last",
+        icon: mdiFormSelect,
+        label: "Wizard form",
       },
     ],
   },
