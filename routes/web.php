@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EmpresaController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\User;
+use App\Models\Empresa;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,9 +66,72 @@ Route::middleware('auth.admin')->get('users', function () {
     return Inertia::render('pages-admin/UsersList', compact('user'));
 })->name('User');
 
-//RUTAS PARA LA EDICION DE PERFIN DE LA EMPRESA
+// Route::middleware('auth.admin')->get('company', function () {
+//     $empresa = Empresa::all();
+//     return Inertia::render('pages-admin/ProfileView', compact('empresa'));
+// })->name('Company');
+
 Route::middleware('auth.admin')->get('company', function () {
-    return Inertia::render('pages-admin/Company');
+    $empresa = Empresa::all();
+    if (count($empresa) == 0) {
+        return Inertia::render('pages-admin/createCompany', []);
+    }else{
+        return Inertia::render('pages-admin/createCompany2', compact('empresa'));
+    }
+    
 })->name('Company');
+
+//Ruta para registrar una nueva empresa
+Route::middleware('auth.admin')->put('company', function () {
+    $empresa = new Empresa();
+    $empresa->name = request()->name;
+    $empresa->rif = request()->rif;
+    $empresa->email = request()->email;
+    $empresa->email2 = request()->email2;
+    $empresa->phone = request()->phone;
+    $empresa->phone2 = request()->phone2;
+    $empresa->pais = request()->pais;
+    $empresa->estado = request()->estado;
+    $empresa->direccion = request()->direccion;
+    $empresa->save();
+    return redirect()->route('Company');
+})->name('company.create');
+
+//Ruta para editar una empresa
+Route::middleware('auth.admin')->patch('company', function () {
+    //Obtengo la unica empresa que esta registrada
+    $empresa = Empresa::all()->first();
+
+    //Actualizo los datos con los campos no nulos de la request
+    $empresa->name = request()->name ?? $empresa->name;
+    $empresa->rif = request()->rif ?? $empresa->rif;
+    $empresa->email = request()->email ?? $empresa->email;
+    $empresa->email2 = request()->email2 ?? $empresa->email2;
+    $empresa->phone = request()->phone ?? $empresa->phone;
+    $empresa->phone2 = request()->phone2 ?? $empresa->phone2;
+    $empresa->pais = request()->pais ?? $empresa->pais;
+    $empresa->estado = request()->estado ?? $empresa->estado;
+    $empresa->direccion = request()->direccion ?? $empresa->direccion;
+    $empresa->save();
+    return redirect()->route('Company');
+})->name('company.edit');
+
+//Ruta para eliminar una empresa
+Route::middleware('auth.admin')->delete('company', function () {
+    $empresa = Empresa::all()->first();
+    $empresa->delete();
+    return redirect()->route('Company');
+})->name('company.delete');
+
+//RUTA PARA EL REGISTRO DE UNA EMPRESA EN UN FORMULARIO TIPO WIZARD
+Route::middleware('auth.admin')->get('company/wizard/register', function () {
+    $empresa = Empresa::all();
+    if (count($empresa) == 0) {
+        return Inertia::render('pages-admin/CreateCompanyWizard', []);
+    }else{
+        return Inertia::render('pages-admin/CreateCompanyWizard', compact('empresa'));
+    }
+})->name('Company.wizard.register');
+
 
 require __DIR__ . '/auth.php';

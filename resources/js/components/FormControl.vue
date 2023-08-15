@@ -144,14 +144,14 @@ if (props.ctrlKFocus) {
     </select>
     <textarea
       v-else-if="computedType === 'textarea'"
-      :id="id"
+      :id="id" 
       v-model="computedValue"
       :class="inputElClass"
       :name="name"
       :maxlength="maxlength"
       :placeholder="placeholder"
       :required="required"
-    />
+    ></textarea>
     <input
       v-else
       :id="id"
@@ -164,7 +164,7 @@ if (props.ctrlKFocus) {
       :required="required"
       :placeholder="placeholder"
       :type="computedType"
-      :class="inputElClass"
+      :class="inputElClass"      
     />
     <FormControlIcon v-if="icon" :icon="icon" :h="controlIconH" />
   </div>

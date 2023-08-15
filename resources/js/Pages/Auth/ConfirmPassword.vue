@@ -1,7 +1,7 @@
 <script setup>
 import { useForm, Head } from '@inertiajs/vue3'
 import { ref } from 'vue'
-import LayoutGuest from '@/layouts/LayoutGuest.vue'
+import LayoutGuest from '@/Layouts/LayoutGuest.vue'
 import SectionFullScreen from '@/components/SectionFullScreen.vue'
 import CardBox from '@/components/CardBox.vue'
 import FormControl from '@/components/FormControl.vue'
