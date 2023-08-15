@@ -3,16 +3,43 @@ import { useMainStore } from "@/Stores/main";
 import { Head, router, useForm } from "@inertiajs/vue3";
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/Layouts/LayoutAuthenticated.vue";
+import BaseButton from "@/components/BaseButton.vue";
+import BaseButtons from "@/components/BaseButtons.vue";
+import CardBoxModal from "@/components/CardBoxModal.vue";
+import { countries, states } from "../../../countries";
 
 import { ref, computed } from "vue";
 
+const rifHelper = computed(() => {
+    if (editData.rif.length == 10) {
+        editData.rif = editData.rif + "-";
+    }
+});
+
 const mainStore = useMainStore();
+
+const isModalDangerActive = ref(false);
 
 defineProps({
     empresa: {
         type: Array,
     },
 });
+
+let statesOptions = ref([]);
+
+let countrieSelected = () => {
+    const selectedCountrie = editData.pais;
+    countries.forEach((countrie) => {
+        if (countrie.name == selectedCountrie) {
+            editData.phone = "+" + countrie.tlf;
+        }
+    });
+
+    console.log(editData.phone);
+    statesOptions = states[selectedCountrie];
+    console.log(statesOptions);
+};
 
 let deleteCompanyCondition = ref(false);
 
@@ -46,7 +73,7 @@ const verifyField = (field) => {
             if (editData.rif == null) {
                 return null;
             } else if (
-                /^([VEJPGvejpg]{1})-([0-9]{8})-([0-9]{2}$)/.test(editData.rif)
+                /^([VEJPGvejpg]{1})-([0-9]{8})-([0-9]{1}$)/.test(editData.rif)
             ) {
                 return true;
             } else {
@@ -80,6 +107,7 @@ const verifyField = (field) => {
             } else {
                 return false;
             }
+            break;
             break;
 
         case "phone":
@@ -151,9 +179,9 @@ const verifyFormRegister = () => {
         verifyField("name") == true &&
         verifyField("rif") == true &&
         verifyField("email") == true &&
-        verifyField("email2") == true &&
+        (editData.email2 ? verifyField("email2") : true) == true &&
         verifyField("phone") == true &&
-        verifyField("phone2") == true &&
+        (editData.phone2 ? verifyField("phone2") : true) == true &&
         verifyField("pais") == true &&
         verifyField("estado") == true &&
         verifyField("direccion") == true
@@ -219,11 +247,20 @@ const deleteCompany = (event) => {
         },
     });
 };
-
-const countries = ["Germany", "Spain", "Norway", "England", "Venezuela"];
 </script>
 
 <template>
+    <CardBoxModal
+        @confirm="deleteCompany"
+        v-model="isModalDangerActive"
+        title="Por favor, confirma"
+        button="danger"
+        button-label="Eliminar"
+        has-cancel
+    >
+        <p>Estas apunto de <b> Eliminar la empresa </b></p>
+        <p>Por favor, confirma</p>
+    </CardBoxModal>
     {{
         (placeholder = {
             name: empresa == undefined ? "Example SA" : empresa[0].name,
@@ -378,6 +415,8 @@ const countries = ["Germany", "Spain", "Norway", "England", "Venezuela"];
                             </label>
                             <input
                                 v-on:change="editInput.push('rif')"
+                                v-on:keyup="rifHelper"
+                                v-on:focus="editData.rif = 'j-'"
                                 v-model="editData.rif"
                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="company-name"
@@ -437,17 +476,17 @@ const countries = ["Germany", "Spain", "Norway", "England", "Venezuela"];
                                 v-model="editData.email2"
                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 :class="{
-                                    valid: verifyField('email2'),
-                                    inValid: verifyField('email2'),
+                                    valid: verifyField('email2') == true,
+                                    inValid: verifyField('email2') == false,
                                 }"
                                 id="second-name"
                                 type="text"
                                 :placeholder="placeholder.email2"
                             />
                             <p
-                                v-if="verifyField('email2') == true"
+                                v-if="verifyField('email2') == false"
                                 class="text-red-500 text-xs italic"
-                            ></p>
+                            >Por favor ingresa un email válido.</p>
                         </div>
                     </div>
 
@@ -516,24 +555,26 @@ const countries = ["Germany", "Spain", "Norway", "England", "Venezuela"];
                             </label>
                             <div class="relative">
                                 <select
-                                    v-on:select="editInput.push('pais')"
+                                    v-on:change="
+                                        editInput.push('pais'),
+                                            countrieSelected()
+                                    "
                                     v-model="editData.pais"
-                                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="pais"
+                                    id="countries"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     :class="{
                                         valid: verifyField('pais') == true,
                                         inValid: verifyField('pais') == false,
                                     }"
                                 >
-                                    <option
-                                        v-for="pais in countries"
-                                        :key="pais"
-                                        :value="pais"
-                                    >
-                                        {{ pais }}
+                                    <option :value="null" selected>
+                                        Escoge un Pais
                                     </option>
-                                    <option selected>
-                                        <!-- {{ empresa[0].pais }} -->
+                                    <option
+                                        v-for="countrie in countries"
+                                        :value="countrie.name"
+                                    >
+                                        {{ countrie.name }}
                                     </option>
                                 </select>
                                 <p
@@ -566,21 +607,24 @@ const countries = ["Germany", "Spain", "Norway", "England", "Venezuela"];
                             </label>
                             <div class="relative">
                                 <select
-                                    v-on:select="editInput.push('estado')"
+                                    v-on:change="editInput.push('estado')"
                                     v-model="editData.estado"
-                                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="estado"
+                                    id="countries"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     :class="{
                                         valid: verifyField('estado') == true,
                                         inValid: verifyField('estado') == false,
                                     }"
                                 >
-                                    <option value="asdasd">New Mexico</option>
-                                    <option value="asdasd">Missouri</option>
-                                    <option value="asdasd">Texas</option>
-                                    <!-- <option selected :value="empresa[0].estado"> -->
-                                    <!-- {{ empresa[0].estado }} -->
-                                    <!-- </option> -->
+                                    <option :value="null" selected>
+                                        Selecciona un estado
+                                    </option>
+                                    <option
+                                        v-for="statesOption in statesOptions"
+                                        :value="statesOption"
+                                    >
+                                        {{ statesOption }}
+                                    </option>
                                 </select>
                                 <p
                                     v-if="verifyField('estado') == false"
@@ -627,8 +671,6 @@ const countries = ["Germany", "Spain", "Norway", "England", "Venezuela"];
                             />
                         </div>
                     </div>
-                    {{ editInput }}
-
                     <button
                         v-if="empresa == undefined"
                         class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
@@ -645,17 +687,21 @@ const countries = ["Germany", "Spain", "Norway", "England", "Venezuela"];
                         >
                             Editar
                         </button>
-
-                        <button
-                            class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-                            type="submit"
-                            v-on:click="deleteCompany"
-                        >
-                            Borrar
-                        </button>
                     </div>
                 </form>
             </div>
+            <BaseButtons
+                v-if="(empresa == undefined) == false"
+                type="justify-center lg:justify-start"
+            >
+                <BaseButton
+                    label="Borrar empresa"
+                    color="danger"
+                    :icon="mdiTrashCan"
+                    big
+                    @click="isModalDangerActive = true"
+                />
+            </BaseButtons>
         </SectionMain>
     </LayoutAuthenticated>
 </template>
