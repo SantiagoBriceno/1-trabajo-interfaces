@@ -258,26 +258,22 @@ const deleteCompany = () => {
             deleteCompanyCondition.value = true;
         },
     });
-}
-
-
+};
 </script>
 
-<template> 
+<template>
     <CardBoxModal
-        @confirm ="deleteCompany"
+        @confirm="deleteCompany"
         v-model="isModalDangerActive"
         title="Por favor, confirma"
         button="danger"
         button-label="Eliminar"
         has-cancel
     >
-
-    
         <p>Estas apunto de <b> Eliminar la empresa </b></p>
         <p>Por favor, confirma</p>
     </CardBoxModal>
-    {{ 
+    {{
         (empresa == undefined
             ? (onCompleteCondition = true)
             : (onCompleteCondition = false),
@@ -359,7 +355,6 @@ const deleteCompany = () => {
                             class="inline-flex items-center capitalize leading-none text-sm border rounded-full py-1.5 px-4 bg-blue-500 border-blue-500 text-white"
                             bis_skin_checked="1"
                         >
-                        
                             <span
                                 class="inline-flex justify-center items-center w-4 h-4 mr-2"
                                 ><svg
@@ -375,9 +370,11 @@ const deleteCompany = () => {
                             ><span>Actualizado</span>
                         </div>
 
-                        <div v-else-if="deleteCompanyCondition"
+                        <div
+                            v-else-if="deleteCompanyCondition"
                             class="inline-flex items-center capitalize leading-none text-sm border rounded-full py-1.5 px-4 bg-blue-500 border-blue-500 text-white"
-                            bis_skin_checked="1">
+                            bis_skin_checked="1"
+                        >
                             <span
                                 class="inline-flex justify-center items-center w-4 h-4 mr-2"
                                 ><svg
@@ -785,7 +782,10 @@ const deleteCompany = () => {
                 </TabContent>
             </FormWizard>
 
-            <BaseButtons v-if = '(empresa == undefined) == false ' type="justify-center lg:justify-start">
+            <BaseButtons
+                v-if="(empresa == undefined) == false"
+                type="justify-center lg:justify-start"
+            >
                 <BaseButton
                     label="Borrar empresa"
                     color="danger"

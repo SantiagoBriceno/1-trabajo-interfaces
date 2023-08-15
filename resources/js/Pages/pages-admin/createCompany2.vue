@@ -238,7 +238,6 @@ const editCompany = (event) => {
 };
 
 const deleteCompany = (event) => {
-    event.preventDefault();
 
     router.delete(route("company.delete"), {
         preserveScroll: true,
