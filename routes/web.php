@@ -120,10 +120,10 @@ Route::middleware('auth.admin')->patch('company', function () {
 Route::middleware('auth.admin')->delete('company', function () {
     $empresa = Empresa::all()->first();
     if ($empresa == null) {
-        return redirect()->route('company/wizard');
+        return redirect()->route('Company');
     }else{
         $empresa->delete();
-        return redirect()->route('company/wizard');}
+        return redirect()->route('Company');}
     
 })->name('company.delete');
 
@@ -170,23 +170,15 @@ Route::middleware('auth.admin')->patch('company', function () {
     return redirect()->route('Company.wizard');
 })->name('company.wizard.edit');
 
-Route::middleware('auth.admin')->get('company/Profile', function () {
-    $empresa = Empresa::all();
-    if (count($empresa) == 0) {
-        return Inertia::render('pages-admin/CreateCompanyWizard', []);
-    }else{
-        return Inertia::render('pages-admin/CompanyProfile', compact('empresa'));
-    }
-})->name('Company.wizard');
 
 //RUTA PARA ELIMINAR LA COMPANY desde Wizard
 Route::middleware('auth.admin')->delete('company/wizard', function () {
     $empresa = Empresa::all()->first();
     if ($empresa == null) {
-        return redirect()->route('company/wizard');
+        return redirect()->route('Company.wizard');
     }else{
         $empresa->delete();
-        return redirect()->route('company/wizard');}
+        return redirect()->route('Company.wizard');}
     
 })->name('company.wizard.delete');
 

@@ -45,7 +45,6 @@ let countrieSelected = () => {
 
     console.log(editData.phone);
     statesOptions = states[selectedCountrie];
-    console.log(statesOptions);
 };
 
 let editInput = ref([]);
@@ -185,6 +184,10 @@ const nextStep = () => {
 };
 
 const rifHelper = computed(() => {
+    if(editData.rif === null){
+        return 
+    }
+
     if (editData.rif.length == 8) {
         editData.rif = editData.rif + "-";
     }
@@ -224,16 +227,18 @@ const verifyFormEdit = () => {
 function onComplete() {
     switch (onCompleteCondition.value) {
         case true:
-            if (verifyFormRegister())
+            if (verifyFormRegister()){
+                editData.rif = 'J-' + editData.rif;
                 editData.put(route("Company.wizard.register"), {
                     preserveScroll: true,
                     onSuccess: () => {
                         editData.reset();
                         editData.status = true;
+                        router.reload()
                     },
                 });
-            else {
-                console.log("ta malo");
+            }else {
+                alert('No ingresaste los datos correctamente')
             }
             break;
         default:
@@ -243,12 +248,13 @@ function onComplete() {
                     onSuccess: () => {
                         editData.reset();
                         editData.status = true;
+                        alert("Cambios actualizados");
                     },
                 });
             }
             break;
     }
-    alert("Cambios actualizados");
+    
 }
 
 const deleteCompany = () => {
@@ -281,8 +287,8 @@ const deleteCompany = () => {
             name: empresa == undefined ? "Example SA" : empresa[0].name,
             rif:
                 empresa == undefined
-                    ? "01234567-00"
-                    : empresa[0].rif.substring(2),
+                    ? "J-01234567-0"
+                    : empresa[0].rif,
             email: empresa == undefined ? "Example@ex.com" : empresa[0].email,
             email2:
                 empresa == undefined
@@ -334,7 +340,7 @@ const deleteCompany = () => {
                         </h1>
                         <p>
                             <b>Rif:</b>
-                            {{ editData.rif ? editData.rif : placeholder.rif }}
+                            {{ editData.rif ? 'J-' + editData.rif : placeholder.rif }}
                         </p>
                         <p>
                             <b>Pais:</b>
@@ -613,6 +619,7 @@ const deleteCompany = () => {
                                 <option
                                     v-for="countrie in countries"
                                     :value="countrie.name"
+                                    :key="countrie"
                                 >
                                     {{ countrie.name }}
                                 </option>
@@ -648,6 +655,7 @@ const deleteCompany = () => {
                                 <option
                                     v-for="statesOption in statesOptions"
                                     :value="statesOption"
+                                    :key="statesOption"
                                 >
                                     {{ statesOption }}
                                 </option>

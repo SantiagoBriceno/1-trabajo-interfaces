@@ -21,7 +21,7 @@ class EmpresaFactory extends Factory
     {
         return [
             "name" => fake()->name(),
-            "rif" => fake()->unique()->numerify('J-#########'),
+            "rif" => fake()->unique()->numerify('J-########-#'),
             "email" => fake()->unique()->safeEmail(),
             "email2" => fake()->safeEmail(),
             "phone" => fake()->unique()->phoneNumber(),

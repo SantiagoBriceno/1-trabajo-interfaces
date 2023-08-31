@@ -204,7 +204,7 @@ const registerCompany = (event) => {
             },
         });
     } else {
-        console.log("invalid form");
+        alert('Invalid camps in form');
     }
 };
 
@@ -263,7 +263,7 @@ const deleteCompany = (event) => {
     {{
         (placeholder = {
             name: empresa == undefined ? "Example SA" : empresa[0].name,
-            rif: empresa == undefined ? "J-01234567-00" : empresa[0].rif,
+            rif: empresa == undefined ? "J-01234567-0" : empresa[0].rif,
             email: empresa == undefined ? "Example@ex.com" : empresa[0].email,
             email2:
                 empresa == undefined
@@ -493,6 +493,112 @@ const deleteCompany = (event) => {
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                for="pais"
+                            >
+                                PAIS
+                            </label>
+                            <div class="relative">
+                                <select
+                                    v-on:change="
+                                        editInput.push('pais'),
+                                            countrieSelected()
+                                    "
+                                    v-model="editData.pais"
+                                    id="countries"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    :class="{
+                                        valid: verifyField('pais') == true,
+                                        inValid: verifyField('pais') == false,
+                                    }"
+                                >
+                                    <option :value="null" selected>
+                                        Escoge un Pais
+                                    </option>
+                                    <option
+                                        v-for="countrie in countries"
+                                        :value="countrie.name"
+                                        :key="countrie"
+                                    >
+                                        {{ countrie.name }}
+                                    </option>
+                                </select>
+                                <p
+                                    v-if="verifyField('pais') == false"
+                                    class="text-red-500 text-xs italic"
+                                >
+                                    Escoge un pais.
+                                </p>
+                                <div
+                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                                >
+                                    <svg
+                                        class="fill-current h-4 w-4"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                for="estado"
+                            >
+                                Estado
+                            </label>
+                            <div class="relative">
+                                <select
+                                    v-on:change="editInput.push('estado')"
+                                    v-model="editData.estado"
+                                    id="countries"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    :class="{
+                                        valid: verifyField('estado') == true,
+                                        inValid: verifyField('estado') == false,
+                                    }"
+                                >
+                                    <option :value="null" selected>
+                                        Selecciona un estado
+                                    </option>
+                                    <option
+                                        v-for="statesOption in statesOptions"
+                                        :value="statesOption"
+                                        :key="statesOption"
+                                    >
+                                        {{ statesOption }}
+                                    </option>
+                                </select>
+                                <p
+                                    v-if="verifyField('estado') == false"
+                                    class="text-red-500 text-xs italic"
+                                >
+                                    escoge un estado.
+                                </p>
+                                <div
+                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                                >
+                                    <svg
+                                        class="fill-current h-4 w-4"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 for="first-phone"
                             >
                                 NRO. TLF 1
@@ -544,109 +650,7 @@ const deleteCompany = (event) => {
                         </div>
                     </div>
 
-                    <div class="flex flex-wrap -mx-3 mb-6">
-                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                for="pais"
-                            >
-                                PAIS
-                            </label>
-                            <div class="relative">
-                                <select
-                                    v-on:change="
-                                        editInput.push('pais'),
-                                            countrieSelected()
-                                    "
-                                    v-model="editData.pais"
-                                    id="countries"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    :class="{
-                                        valid: verifyField('pais') == true,
-                                        inValid: verifyField('pais') == false,
-                                    }"
-                                >
-                                    <option :value="null" selected>
-                                        Escoge un Pais
-                                    </option>
-                                    <option
-                                        v-for="countrie in countries"
-                                        :value="countrie.name"
-                                    >
-                                        {{ countrie.name }}
-                                    </option>
-                                </select>
-                                <p
-                                    v-if="verifyField('pais') == false"
-                                    class="text-red-500 text-xs italic"
-                                >
-                                    Escoge un pais.
-                                </p>
-                                <div
-                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-                                >
-                                    <svg
-                                        class="fill-current h-4 w-4"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        <path
-                                            d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                                        />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                for="estado"
-                            >
-                                Estado
-                            </label>
-                            <div class="relative">
-                                <select
-                                    v-on:change="editInput.push('estado')"
-                                    v-model="editData.estado"
-                                    id="countries"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    :class="{
-                                        valid: verifyField('estado') == true,
-                                        inValid: verifyField('estado') == false,
-                                    }"
-                                >
-                                    <option :value="null" selected>
-                                        Selecciona un estado
-                                    </option>
-                                    <option
-                                        v-for="statesOption in statesOptions"
-                                        :value="statesOption"
-                                    >
-                                        {{ statesOption }}
-                                    </option>
-                                </select>
-                                <p
-                                    v-if="verifyField('estado') == false"
-                                    class="text-red-500 text-xs italic"
-                                >
-                                    escoge un estado.
-                                </p>
-                                <div
-                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-                                >
-                                    <svg
-                                        class="fill-current h-4 w-4"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        <path
-                                            d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                                        />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full px-3">
