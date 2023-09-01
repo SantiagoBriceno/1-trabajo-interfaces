@@ -8,6 +8,10 @@ import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
+//DEFINO LAS PROPIEDADES GLOBALES
+
+
+
 const appName =
   window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
 
@@ -21,7 +25,7 @@ createInertiaApp({
       import.meta.glob("./Pages/**/*.vue")
     ),
   setup({ el, App, props, plugin }) {
-    return createApp({ render: () => h(App, props) })
+    const myApp = createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(pinia)
       .use(ZiggyVue, Ziggy)
@@ -29,7 +33,7 @@ createInertiaApp({
   },
   progress: {
     color: "#4B5563",
-  },
+  }
 });
 
 const styleStore = useStyleStore(pinia);

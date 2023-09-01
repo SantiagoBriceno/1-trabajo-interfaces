@@ -291,7 +291,7 @@ const deleteCompany = (event) => {
                 >
                     <div class="flex flex-col justify-center">
                         <div
-                            class="rounded-full h-48 w-48 flex bg-teal-400 m-2 flex text-center justify-center items-center text-white"
+                            class="rounded-full h-48 w-48 flex bg-teal-400 m-2 text-center justify-center items-center text-white"
                         >
                             <h1 class="text-7xl text-center">
                                 {{

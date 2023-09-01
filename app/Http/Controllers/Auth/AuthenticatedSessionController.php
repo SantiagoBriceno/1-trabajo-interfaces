@@ -40,6 +40,7 @@ class AuthenticatedSessionController extends Controller
 
         if ($rol == 'admin') {
             return redirect()->intended(RouteServiceProvider::HOME);
+            // HAY QUE CAMBIARLO
         } else if ($rol == 'admin') {
             return redirect()->intended(RouteServiceProvider::INDEX);
         }

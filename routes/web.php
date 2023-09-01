@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\User;
 use App\Models\Empresa;
+use App\Models\Colors;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +33,11 @@ Route::get('/', function () {
 
 //RUTA INDEX PAGE PROPUESTA
 Route::get('/index', function () {
+    $colors = ['este es un color', 'este es otro color', 'este es otro color mas'];
     return Inertia::render('App', [
         'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register')
+        'canRegister' => Route::has('register'),
+        'colors' => $colors
     ]);
 })->name('index');
 
@@ -182,6 +185,39 @@ Route::middleware('auth.admin')->delete('company/wizard', function () {
     
 })->name('company.wizard.delete');
 
+Route::middleware('auth.admin')->get('company/colors', function () {
+    $colors = Colors::all();
+    if (count($colors) == 0) {
+        return Inertia::render('pages-admin/CreatePaletteColor', []);
+    }else{
+        return Inertia::render('pages-admin/CreatePaletteColor', compact('colors'));
+    }
+})->name('Company.colors');
 
+Route::middleware('auth.admin')->put('company/colors', function () {
+    $colors = new Colors();
+    $colors->color1 = request()->color1;
+    $colors->color2 = request()->color2;
+    $colors->color3 = request()->color3;
+    $colors->color4 = request()->color4;
+    $colors->color5 = request()->color5;
+    $colors->save();
+    return redirect()->route('Company.colors');
+})->name('colors.create');
+
+//Ruta para editar una empresa
+Route::middleware('auth.admin')->patch('company/colors', function () {
+    //Obtengo la unica empresa que esta registrada
+    $colors = Colors::all()->first();
+
+    //Actualizo los datos con los campos no nulos de la request
+    $colors->color1 = request()->color1 ?? $colors->color1;
+    $colors->color2 = request()->color2 ?? $colors->color2;
+    $colors->color3 = request()->color3 ?? $colors->color3;
+    $colors->color4 = request()->color4 ?? $colors->color4;
+    $colors->color5 = request()->color5 ?? $colors->color5;
+    $colors->save();
+    return redirect()->route('colors.edit');
+})->name('colors.edit');    
 
 require __DIR__ . '/auth.php';
