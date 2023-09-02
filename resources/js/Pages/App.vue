@@ -15,7 +15,8 @@ defineProps({
         type: Boolean,
     },
     colors:{
-      type: Object
+      type: Object,
+      required: false
     }
 });
 
@@ -34,7 +35,8 @@ defineProps({
     <Navbar :canLogin="canLogin" :canRegister="canRegister" :isAuth="$page.props.auth.user"/>
 
     <!-- CONTENEDOR DE PALETA DE COLORES -->
-    <div class="flex flex-col mt-20" >
+    <div 
+    class="flex flex-col mt-20" v-if="colors">
       <p
       :style="{color: colors.color4}">Paleta de colores de la empresa</p>
       <div class="w-60 h-12 flex">
@@ -62,7 +64,6 @@ defineProps({
     </div>
 
     <Home />
-    
     <Category />
     <TrickOrTreat />
     <Subscribe />
