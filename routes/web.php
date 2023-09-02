@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Models\User;
 use App\Models\Empresa;
 use App\Models\Colors;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,8 @@ Route::get('/', function () {
 
 //RUTA INDEX PAGE PROPUESTA
 Route::get('/index', function () {
-    $colors = ['este es un color', 'este es otro color', 'este es otro color mas'];
+    $colors = Colors::all()->first();
+
     return Inertia::render('App', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -78,10 +80,9 @@ Route::middleware('auth.admin')->get('company', function () {
     $empresa = Empresa::all();
     if (count($empresa) == 0) {
         return Inertia::render('pages-admin/createCompany2', []);
-    }else{
+    } else {
         return Inertia::render('pages-admin/createCompany2', compact('empresa'));
     }
-    
 })->name('Company');
 
 //Ruta para registrar una nueva empresa
@@ -124,10 +125,10 @@ Route::middleware('auth.admin')->delete('company', function () {
     $empresa = Empresa::all()->first();
     if ($empresa == null) {
         return redirect()->route('Company');
-    }else{
+    } else {
         $empresa->delete();
-        return redirect()->route('Company');}
-    
+        return redirect()->route('Company');
+    }
 })->name('company.delete');
 
 //RUTA PARA EL REGISTRO DE UNA EMPRESA EN UN FORMULARIO TIPO WIZARD
@@ -135,7 +136,7 @@ Route::middleware('auth.admin')->get('company/wizard', function () {
     $empresa = Empresa::all();
     if (count($empresa) == 0) {
         return Inertia::render('pages-admin/CreateCompanyWizard', []);
-    }else{
+    } else {
         return Inertia::render('pages-admin/CreateCompanyWizard', compact('empresa'));
     }
 })->name('Company.wizard');
@@ -179,28 +180,38 @@ Route::middleware('auth.admin')->delete('company/wizard', function () {
     $empresa = Empresa::all()->first();
     if ($empresa == null) {
         return redirect()->route('Company.wizard');
-    }else{
+    } else {
         $empresa->delete();
-        return redirect()->route('Company.wizard');}
-    
+        return redirect()->route('Company.wizard');
+    }
 })->name('company.wizard.delete');
 
 Route::middleware('auth.admin')->get('company/colors', function () {
     $colors = Colors::all();
     if (count($colors) == 0) {
         return Inertia::render('pages-admin/CreatePaletteColor', []);
-    }else{
+    } else {
         return Inertia::render('pages-admin/CreatePaletteColor', compact('colors'));
     }
 })->name('Company.colors');
 
-Route::middleware('auth.admin')->put('company/colors', function () {
+Route::middleware('auth.admin')->post('company/colors', function () {
     $colors = new Colors();
     $colors->color1 = request()->color1;
     $colors->color2 = request()->color2;
     $colors->color3 = request()->color3;
     $colors->color4 = request()->color4;
     $colors->color5 = request()->color5;
+
+    if(request()->hasFile('file')){
+        $file = request()->file('file');
+        $filename = $file->getClientOriginalName();
+        $colors->file = $filename;
+        $file->move(public_path('images'), $filename);
+    }else{
+        $colors->file = null;
+    }
+
     $colors->save();
     return redirect()->route('Company.colors');
 })->name('colors.create');
@@ -218,6 +229,6 @@ Route::middleware('auth.admin')->patch('company/colors', function () {
     $colors->color5 = request()->color5 ?? $colors->color5;
     $colors->save();
     return redirect()->route('colors.edit');
-})->name('colors.edit');    
+})->name('colors.edit');
 
 require __DIR__ . '/auth.php';

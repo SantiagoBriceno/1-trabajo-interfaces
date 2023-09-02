@@ -19,6 +19,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  colors: {
+    type: Object,
+    required: false,
+  }
 });
 
 const emit = defineEmits(["menu-click"]);
@@ -118,6 +122,7 @@ onBeforeUnmount(() => {
       <span
         class="px-2 transition-colors"
         :class="{ 'lg:hidden': item.isDesktopNoLabel && item.icon }"
+        :style="{color: colors ? colors.color4 : ''}"
         >{{ itemLabel }}</span
       >
       <BaseIcon
@@ -131,7 +136,7 @@ onBeforeUnmount(() => {
       class="text-sm border-b border-gray-100 lg:border lg:bg-white lg:absolute lg:top-full lg:left-0 lg:min-w-full lg:z-20 lg:rounded-lg lg:shadow-lg lg:dark:bg-slate-800 dark:border-slate-700"
       :class="{ 'lg:hidden': !isDropdownActive }"
     >
-      <NavBarMenuList :menu="item.menu" @menu-click="menuClickDropdown" />
+      <NavBarMenuList :menu="item.menu" @menu-click="menuClickDropdown" :colors="colors"/>
     </div>
   </component>
 </template>

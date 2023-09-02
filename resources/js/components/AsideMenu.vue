@@ -9,6 +9,10 @@ defineProps({
   },
   isAsideMobileExpanded: Boolean,
   isAsideLgActive: Boolean,
+  colors: {
+    type: Object,
+    required: false
+  }
 });
 
 const emit = defineEmits(["menu-click", "aside-lg-close-click"]);
@@ -31,6 +35,7 @@ const asideLgCloseClick = (event) => {
     ]"
     @menu-click="menuClick"
     @aside-lg-close-click="asideLgCloseClick"
+    :colors = "colors"
   />
   <OverlayLayer
     v-show="isAsideLgActive"

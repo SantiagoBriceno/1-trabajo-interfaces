@@ -83,11 +83,6 @@ defineProps({
             >Register</Link>
           </template>
          </div> 
-        <!-- <button v-if="isAuth" class="hidden md:block px-8 py-3 rounded-full text-white font-medium tracking-wider uppercase bg-secondary w-full lg:w-auto">Home</button>
-
-        <button v-if="canLogin" class="hidden md:block px-8 py-3 rounded-full text-white font-medium tracking-wider uppercase bg-secondary w-full lg:w-auto">Sign Up</button>
-
-        <button v-if="canRegister" class="hidden md:block px-8 py-3 rounded-full text-white font-medium tracking-wider uppercase bg-secondary w-full lg:w-auto">Login</button> -->
       </div>
     </div>
   </nav>

@@ -15,26 +15,10 @@ defineProps({
         type: Boolean,
     },
     colors:{
-      type: Array
+      type: Object
     }
 });
 
-// const colors = ['red', 'green', 'blue', 'yellow', 'pink'];
-// // 60%
-
-// switch (colors.length){
-//   case 3:
-//     colorPrimary = colors[0];
-//     colorSecondary = colors[1];
-//     colorTertiary = colors[2];
-//     break;
-//   case 4:
-//     colorPrimary = colors[0];
-//     colorSecondary = colors[1];
-//     colorTertiary = [colors[2], colors[3]];
-//     break;
-// }
-// const colorPrimary 
 
 </script>
 
@@ -44,9 +28,41 @@ defineProps({
   
   <Head title="Home"/>
   <div class="container overflow-x-hidden">
-    <Navbar :canLogin="canLogin" :canRegister="canRegister" :isAuth="$page.props.auth.user"/>
     
+
+    
+    <Navbar :canLogin="canLogin" :canRegister="canRegister" :isAuth="$page.props.auth.user"/>
+
+    <!-- CONTENEDOR DE PALETA DE COLORES -->
+    <div class="flex flex-col mt-20" >
+      <p
+      :style="{color: colors.color4}">Paleta de colores de la empresa</p>
+      <div class="w-60 h-12 flex">
+        <div class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]" 
+        :style="{backgroundColor: colors.color1}"
+        :title="colors.color1"
+        ></div>
+        <div class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]" 
+        :style="{backgroundColor: colors.color2}"
+        :title="colors.color2"
+        ></div>
+        <div class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]" 
+        :style="{backgroundColor: colors.color3}"
+        :title="colors.color3"
+        ></div>
+        <div class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]" 
+        :style="{backgroundColor: colors.color4}"
+        :title="colors.color4"
+        ></div>
+        <div class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]" 
+        :style="{backgroundColor: colors.color5}"
+        :title="colors.color5"
+        ></div>
+      </div>
+    </div>
+
     <Home />
+    
     <Category />
     <TrickOrTreat />
     <Subscribe />

@@ -37,7 +37,8 @@ export const getButtonColor = (
   color,
   isOutlined,
   hasHover,
-  isActive = false
+  isActive = false,
+  newcolor = ''
 ) => {
   const colors = {
     ring: {

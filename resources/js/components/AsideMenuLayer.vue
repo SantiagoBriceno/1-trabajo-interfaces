@@ -6,11 +6,15 @@ import AsideMenuList from "@/components/AsideMenuList.vue";
 import AsideMenuItem from "@/components/AsideMenuItem.vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 
-defineProps({
+const props = defineProps({
   menu: {
     type: Array,
     required: true,
   },
+  colors: {
+    type: Object,
+    required: false
+  }
 });
 
 const emit = defineEmits(["menu-click", "aside-lg-close-click"]);
@@ -22,6 +26,7 @@ const logoutItem = computed(() => ({
   icon: mdiLogout,
   color: "info",
   isLogout: true,
+  style: props.colors ? props.colors.color3 : ''
 }));
 
 const menuClick = (event, item) => {
@@ -36,20 +41,22 @@ const asideLgCloseClick = (event) => {
 <template>
   <aside
     id="aside"
-    class="lg:py-2 lg:pl-2 w-60 fixed flex z-40 top-0 h-screen transition-position overflow-hidden"
+    class="w-60 fixed flex z-40 top-0 h-screen transition-position overflow-hidden"
   >
     <div
       :class="styleStore.asideStyle"
-      class="lg:rounded-2xl flex-1 flex flex-col overflow-hidden dark:bg-slate-900"
+      class="lg:rounded-2xl flex-1 flex flex-col overflow-hidden dark:bg-slate-900 "
+      :style="{backgroundColor: colors ? colors.color2 : ''}"
     >
       <div
         :class="styleStore.asideBrandStyle"
         class="flex flex-row h-14 items-center justify-between dark:bg-slate-900"
+        :style="{backgroundColor: colors ? colors.color2 : ''}"
       >
         <div
           class="text-center flex-1 lg:text-left lg:pl-6 xl:text-center xl:pl-0"
         >
-          <b class="font-black">Administrador</b>
+          <b class="font-black" :style="{color: colors ? colors.color4 : ''}">Administrador</b>
         </div>
         <button
           class="hidden lg:inline-block xl:hidden p-3"
@@ -66,12 +73,13 @@ const asideLgCloseClick = (event) => {
         "
         class="flex-1 overflow-y-auto overflow-x-hidden"
       >
-        <AsideMenuList :menu="menu" @menu-click="menuClick" />
+        <AsideMenuList :menu="menu" @menu-click="menuClick" :colors="colors" />
       </div>
-
       <ul>
-        <AsideMenuItem :item="logoutItem" @menu-click="menuClick" />
+        <AsideMenuItem :item="logoutItem" @menu-click="menuClick" :colors="colors"/>
       </ul>
     </div>
   </aside>
 </template>
+
+<!-- lg:py-2 lg:pl-2 -->

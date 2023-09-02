@@ -11,6 +11,10 @@ defineProps({
     type: Array,
     required: true,
   },
+  colors: {
+    type: Object,
+    required: false
+  },
 });
 
 const emit = defineEmits(["menu-click"]);
@@ -25,6 +29,7 @@ const isMenuNavBarActive = ref(false);
 <template>
   <nav
     class="top-0 inset-x-0 fixed bg-gray-50 h-14 z-30 transition-position w-screen lg:w-auto dark:bg-slate-800"
+    :style="{backgroundColor: colors ? colors.color2 : '', color: colors ? colors.color4 : ''}"
   >
     <div class="flex lg:items-stretch" :class="containerMaxW">
       <div class="flex flex-1 items-stretch h-14">
@@ -43,8 +48,10 @@ const isMenuNavBarActive = ref(false);
       <div
         class="max-h-screen-menu overflow-y-auto lg:overflow-visible absolute w-screen top-14 left-0 bg-gray-50 shadow-lg lg:w-auto lg:flex lg:static lg:shadow-none dark:bg-slate-800"
         :class="[isMenuNavBarActive ? 'block' : 'hidden']"
+        :style="{backgroundColor: colors ? colors.color2 : '', color: colors ? colors.color4 : ''}"
+        
       >
-        <NavBarMenuList :menu="menu" @menu-click="menuClick" />
+        <NavBarMenuList :menu="menu" @menu-click="menuClick" :colors="colors"/>
       </div>
     </div>
   </nav>

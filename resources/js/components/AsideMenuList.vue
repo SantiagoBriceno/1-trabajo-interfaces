@@ -7,6 +7,10 @@ defineProps({
     type: Array,
     required: true,
   },
+  colors: {
+    type: Object,
+    required: false
+  }
 });
 
 const emit = defineEmits(["menu-click"]);
@@ -24,6 +28,7 @@ const menuClick = (event, item) => {
       :item="item"
       :is-dropdown-list="isDropdownList"
       @menu-click="menuClick"
+      :colors="colors"
     />
   </ul>
 </template>
