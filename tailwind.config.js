@@ -21,6 +21,11 @@ module.exports = {
                 sm: "2rem",
                 lg: "4rem",
             },
+            extend : {
+                width : {
+                    '100' : '100vw',
+                }
+            }
         },
         extend: {
             zIndex: {

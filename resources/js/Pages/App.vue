@@ -28,17 +28,15 @@ defineProps({
 <template>
   
   <Head title="Home"/>
-  <div class="container overflow-x-hidden">
+  <div class="container overflow-x-hidden" :style="{background: colors ? colors.color1 : '', }">
     
 
     
-    <Navbar :canLogin="canLogin" :canRegister="canRegister" :isAuth="$page.props.auth.user"/>
-
-    <!-- CONTENEDOR DE PALETA DE COLORES -->
+    <Navbar :canLogin="canLogin" :canRegister="canRegister" :isAuth="$page.props.auth.user" :colors="colors"/>
     <div 
     class="flex flex-col mt-20" v-if="colors">
       <p
-      :style="{color: colors.color4}">Paleta de colores de la empresa</p>
+      :style="{color: colors.color4}"></p>
       <div class="w-60 h-12 flex">
         <div class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]" 
         :style="{backgroundColor: colors.color1}"
@@ -63,8 +61,10 @@ defineProps({
       </div>
     </div>
 
-    <Home />
-    <Category />
+    
+
+    <Home :colors="colors"/>
+    <Category :colors="colors"/>
     <TrickOrTreat />
     <Subscribe />
     <Footer />

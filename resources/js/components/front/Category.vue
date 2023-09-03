@@ -1,33 +1,41 @@
 <script setup>
-  import category1 from "../assets/images/category/category1-img.webp"
-  import category2 from "../assets/images/category/category2-img.webp"
-  import category3 from "../assets/images/category/category3-img.webp"
+  import category1 from "../assets/futbol/images/real-madrid-2014.png"
+  import category2 from "../assets/futbol/images/italia.png"
+  import category3 from "../assets/futbol/images/psg.png"
 
   const categories = [
     {
-      title: 'Ghost',
+      title: 'Camisetas para adultos',
       image: category1,
-      desc: 'Soul or spirit of a dead person or non-human animal. It is so SCARYY!!!!'
+      desc: ''
     },
     {
-      title: 'Witch',
+      title: 'Camisetas para niños',
       image: category2,
-      desc: 'A person who can use spells, potions, wands and other awesome magical items. BE CAREFUL!!'
+      desc: ''
     },
     {
-      title: 'Pumpkin',
+      title: 'Accesorios',
       image: category3,
-      desc: 'A Halloween pumpkin is a pumpkin that is carved into a jack-o’-lantern, a lantern with a scary or funny face, to celebrate the holiday of Halloween'
+      desc: ''
     },
   ]
+
+  defineProps({
+    colors:{
+      type: Object,
+      required: false
+    }
+});
+
 </script>
 
 <template>
   <section id="category" class="flex flex-col items-center py-32">
-    <h2 class="my-10 text-5xl md:text-6xl font-bold text-white">Category</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 place-items-center">
-      <div v-for="category of categories" :key="category.title" class="text-white grid place-items-center gap-5 text-center">
-        <div class="p-10">
+    <h2 class="my-10 text-5xl md:text-6xl font-bold text-white">Categorías</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 place-items-center gap-20">
+      <div v-for="category of categories" :key="category.title" class="text-white grid place-items-center text-center p-8 rounded-md max-h-fit" :style="{background: colors ? colors.color2 : '',}">
+        <div class="pb-10 pt-10">
           <img :src="category.image" class="w-full" alt="category1">
         </div>
         <h3 class="text-3xl font-bold">{{ category.title }}</h3>
