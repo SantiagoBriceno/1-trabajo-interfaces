@@ -35,7 +35,7 @@
     <h2 class="my-10 mb-14 text-5xl md:text-6xl font-bold text-white">Categorías</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 place-items-center gap-20">
       <div v-for="category of categories" :key="category.title" class="text-white grid place-items-center text-center p-8 rounded-md max-h-fit bg-gradient-to-b from-primary-200/20 to-primary-200/10" 
-      :style="{backgroundColor: colors ? `${colors.color3}50` : '',}">
+      :style="{backgroundColor: colors ? `${colors.color3}` : '',}">
         <div class="pb-10 pt-10">
           <img :src="category.image" class="w-full" alt="category1">
         </div>

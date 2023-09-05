@@ -13,7 +13,7 @@
 <template>
   <section id="trick-or-treat" class="flex flex-col items-center py-32">
     <h2 class="mt-10 mb-28 text-5xl md:text-6xl font-bold text-black" :style="{color: colors ? colors.color4 : '',}">Clubes que nos apoyan</h2>
-    <div class="grid grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-10">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-10">
       <div 
         v-for="(tot, i) of tots" 
         :key="tot.title" 
@@ -25,7 +25,7 @@
           <img class="h-48 w-full" :src="tot.image" alt="">
         </div>
         <h3 class="text-2xl lg:text-4xl font-bold" :style="{color: colors ? colors.color4 : '',}">{{ tot.title }}</h3>
-        <p class="w-[90%] hidden md:block
+        <p class="w-[90%] md:block
         " :style="{color: colors ? colors.color4 : '',}">{{ tot.desc }}</p>
       </div>
     </div>

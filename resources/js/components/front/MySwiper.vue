@@ -29,7 +29,7 @@
     class="pb-8"
   >
     <swiper-slide class="grid place-items-center">
-      <img src="../assets/futbol/images/argentina.png" class="w-[100%]" />
+      <img src="../assets/futbol/images/argentina.png" class="w-[100%] mb-8" />
     </swiper-slide>
     <swiper-slide class="grid place-items-center">
       <img src="../assets/futbol/images/bayern.png" class="w-[100%]" />

@@ -26,7 +26,7 @@ defineProps({
                 <div class="flex items-center justify-center gap-3">
                     <img
                         v-if="colors"
-                        class="w-1/6"
+                        class="w-1/4 mt-8"
                         :src="`/images/${colors.file}`"
                         alt="head1-img"
                     />

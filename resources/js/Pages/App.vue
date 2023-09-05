@@ -23,7 +23,7 @@ defineProps({
 <template>
     <Head title="Home">
         <meta name="description" content="Dashboard" />
-        <link v-if="colors.file" rel="icon" :href="`/images/${colors.file}`" />
+        <link v-if="colors" rel="icon" alt="Foto logo" :href="`/images/${colors.file}`" />
     </Head>
     <div
         class="container overflow-x-hidden"

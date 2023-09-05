@@ -103,7 +103,7 @@ const editColors = (event) => {
     {{ (passData.color5 = editData.color5) }}
     <Head title="Mis colores">
         <meta name="description" content="Mis colores" />
-        <link v-if="colors[0].file" rel="icon" :href="`/images/${colors[0].file}`" />
+        <link v-if="colors" rel="icon" :href="`/images/${colors[0].file}`" />
     </Head>
     <LayoutAuthenticated :colors="passData">
         <SectionMain>
@@ -244,7 +244,7 @@ const editColors = (event) => {
                             <img
                                 class="w-full h-auto py-20"
                                 id="logo"
-                                :src="`/images/${colors[0].file}`"
+                                :src="`/images/${colors.file}`"
                                 alt=""
                             />
                         </div>
