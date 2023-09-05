@@ -28,29 +28,32 @@
     :pagination="{ clickable: true }"
     class="pb-8"
   >
-    <swiper-slide class="grid place-items-center justify-center items-center">
-      <img src="../assets/futbol/images/argentina.png" class="w-4 lg:w-[100%]" />
+    <swiper-slide class="grid place-items-center">
+      <img src="../assets/futbol/images/argentina.png" class="w-[100%]" />
     </swiper-slide>
     <swiper-slide class="grid place-items-center">
-      <img src="../assets/futbol/images/bayern.png" class="w-2/3 lg:w-[100%]" />
+      <img src="../assets/futbol/images/bayern.png" class="w-[100%]" />
     </swiper-slide>
     <swiper-slide class="grid place-items-center">
-      <img src="../assets/futbol/images/brasil.png" class="w-2/3 lg:w-[100%]" />
+      <img src="../assets/futbol/images/brasil.png" class="w-[100%]" />
     </swiper-slide>
     <swiper-slide class="grid place-items-center">
-      <img src="../assets/futbol/images/real-madrid.png" class="w-2/3 lg:w-[100%]" />
+      <img src="../assets/futbol/images/real-madrid.png" class="w-[100%]" />
     </swiper-slide>
     <swiper-slide class="grid place-items-center h-60">
-      <img src="../assets/futbol/images/milan.png" class="w-[100%]" />
+      <img src="../assets/futbol/images/psg.png" class="w-[100%]" />
     </swiper-slide>
   </swiper>
 </template>
 
 <style>
   .swiper-pagination-bullet {
-    @apply w-3 h-3 bg-red-500 opacity-100
+    @apply w-3 h-3 bg-black opacity-100
   }
   .swiper-pagination-bullet.swiper-pagination-bullet-active {
-    @apply rounded-xl w-6  bg-secondary 
+    @apply rounded-xl w-6  bg-white 
+  }
+  swiper-slide {
+    display: flex;
   }
 </style>

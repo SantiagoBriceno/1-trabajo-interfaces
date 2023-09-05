@@ -3,10 +3,8 @@ import Navbar from "@/components/front/Navbar.vue";
 import Home from "@/components/front/Home.vue";
 import Category from "@/components/front/Category.vue";
 import TrickOrTreat from "@/components/front/TrickOrTreat.vue";
-import Subscribe from "@/components/front/Subscribe.vue";
 import Footer from "@/components/front/Footer.vue";
 import { Head } from "@inertiajs/vue3";
-import MySwiper from "@/components/front/MySwiper.vue";
 
 defineProps({
     canLogin: {
@@ -66,8 +64,7 @@ defineProps({
         </div>
         <Home :colors="colors" />
         <Category :colors="colors" />
-        <TrickOrTreat />
-        <Subscribe />
+        <TrickOrTreat :colors="colors"/>
         <Footer />
         <p class="text-black">{{ colors }}</p>
     </div>

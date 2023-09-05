@@ -1,40 +1,40 @@
-import tor1 from "../assets/images/trick-or-treat/tor1-img.webp"
-import tor2 from "../assets/images/trick-or-treat/tor2-img.webp"
-import tor3 from "../assets/images/trick-or-treat/tor3-img.webp"
-import tor4 from "../assets/images/trick-or-treat/tor4-img.webp"
-import tor5 from "../assets/images/trick-or-treat/tor5-img.webp"
-import tor6 from "../assets/images/trick-or-treat/tor6-img.webp"
+import tor1 from "../assets/futbol/images/milan-logo.png"
+import tor2 from "../assets/futbol/images/real-madrid-logo.png"
+import tor3 from "../assets/futbol/images/m-city.png"
+import tor4 from "../assets/futbol/images/m-united.png"
+import tor5 from "../assets/futbol/images/Inter-miami-logo.png"
+import tor6 from "../assets/futbol/images/arsenal-logo.png"
 
 const tots = [
   {
-    title: 'Candy',
+    title: 'Milan',
     image: tor1,
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id id consequat, eu faucibus nulla. Ultrices mattis lacus, sed maecenas nascetur.'
+    desc: 'El segundo más campeón de la Champions League'
   },
   {
-    title: 'Ghost',
+    title: 'Real Madrid',
     image: tor2,
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id id consequat, eu faucibus nulla. Ultrices mattis lacus, sed maecenas nascetur.'
+    desc: 'El club más grande de la historia'
   },
   {
-    title: 'Grave',
+    title: 'Manchester City',
     image: tor3,
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id id consequat, eu faucibus nulla. Ultrices mattis lacus, sed maecenas nascetur.'
+    desc: 'Actual campeón de la Champions League'
   },
   {
-    title: 'House',
+    title: 'Manchester United',
     image: tor4,
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id id consequat, eu faucibus nulla. Ultrices mattis lacus, sed maecenas nascetur.'
+    desc: 'De los clubes más grandes de Inglaterra'
   },
   {
-    title: 'Spider',
+    title: 'Inter Miami',
     image: tor5,
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id id consequat, eu faucibus nulla. Ultrices mattis lacus, sed maecenas nascetur.'
+    desc: 'Actual equipo de Messi'
   },
   {
-    title: 'Bone',
+    title: 'Arsenal',
     image: tor6,
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id id consequat, eu faucibus nulla. Ultrices mattis lacus, sed maecenas nascetur.'
+    desc: 'Equipo revelación de la temporada pasada'
   },
 ]
 

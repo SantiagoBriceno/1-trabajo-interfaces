@@ -84,14 +84,18 @@ const registerColors = (event) => {
 
 const editColors = (event) => {
     event.preventDefault();
-    editData.patch(route("colors.edit"), {
+
+    editData.file = img;
+
+    router.post("/company/colors", editData,{
+        forceFormData: true,
         preserveScroll: true,
         onSuccess: () => {
-            editData.reset();
             editData.status = true;
+            //Aqui se refresca la pagina
             window.location.reload();
-        },
-    });
+        },
+    });
 };
 </script>
 
@@ -106,7 +110,7 @@ const editColors = (event) => {
         <SectionMain>
             <div class="bg-white-400 flex justify-center items-center">
                 <form
-                    class="flex flex-col justify-center items-center mt-24 gap-20"
+                    class="flex flex-col justify-center items-center gap-10"
                 >
                     <div class="flex justify-center items-center">
                         <div class="flex flex-col justify-center items-center">
@@ -237,10 +241,10 @@ const editColors = (event) => {
                         :style="{ color: editData.color4 }"
                     >
                     <div v-if="colors" class="h-48 w-48 m-2 flex text-center justify-center items-center">
-                        <img class="rounded-full w-auto" id = 'logo' :src="`/images/${colors[0].file}`" alt="">
+                        <img class=" w-full h-auto py-20" id = 'logo' :src="`/images/${colors[0].file}`" alt="">
                     </div>
 
-                        <label class="mb-2 text-sm font-medium" for="file_input"
+                        <label class="mt-8 mb-4 text-sm font-medium" for="file_input"
                             >Carga el logo de tu empresa</label
                         >
                         <input

@@ -196,26 +196,44 @@ Route::middleware('auth.admin')->get('company/colors', function () {
 })->name('Company.colors');
 
 Route::middleware('auth.admin')->post('company/colors', function () {
-    $colors = new Colors();
-    $colors->color1 = request()->color1;
-    $colors->color2 = request()->color2;
-    $colors->color3 = request()->color3;
-    $colors->color4 = request()->color4;
-    $colors->color5 = request()->color5;
+    $colors = Colors::all()->first();
+    if ($colors == null) {
+        $colors = new Colors();
+        $colors->color1 = request()->color1;
+        $colors->color2 = request()->color2;
+        $colors->color3 = request()->color3;
+        $colors->color4 = request()->color4;
+        $colors->color5 = request()->color5;
 
-    if(request()->hasFile('file')){
-        $file = request()->file('file');
-        $filename = $file->getClientOriginalName();
-        $colors->file = $filename;
-        $file->move(public_path('images'), $filename);
-    }else{
-        $colors->file = null;
+        if (request()->hasFile('file')) {
+            $file = request()->file('file');
+            $filename = $file->getClientOriginalName();
+            $colors->file = $filename;
+            $file->move(public_path('images'), $filename);
+        } else {
+            $colors->file = null;
+        }
+        $colors->save();
+        return redirect()->route('Company.colors');
+    } else {
+
+        $colors->color1 = request()->color1 ?? $colors->color1;
+        $colors->color2 = request()->color2 ?? $colors->color2;
+        $colors->color3 = request()->color3 ?? $colors->color3;
+        $colors->color4 = request()->color4 ?? $colors->color4;
+        $colors->color5 = request()->color5 ?? $colors->color5;
+        if (request()->hasFile('file')) {
+            $file = request()->file('file');
+            $filename = $file->getClientOriginalName();
+            $colors->file = $filename;
+            $file->move(public_path('images'), $filename);
+        } else {
+            $colors->file = null;
+        }
+        $colors->save();
+        return redirect()->route('colors.edit');
     }
-
-    $colors->save();
-    return redirect()->route('Company.colors');
 })->name('colors.create');
-
 //Ruta para editar una empresa
 Route::middleware('auth.admin')->patch('company/colors', function () {
     //Obtengo la unica empresa que esta registrada

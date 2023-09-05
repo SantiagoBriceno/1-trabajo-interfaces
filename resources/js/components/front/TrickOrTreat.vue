@@ -1,10 +1,18 @@
 <script setup>
   import tots from '../data/trickOrTreat.js'
+
+  defineProps({
+    colors: {
+      type: Object,
+      required: false,
+    }
+  })
+
 </script>
 
 <template>
   <section id="trick-or-treat" class="flex flex-col items-center py-32">
-    <h2 class="mt-10 mb-28 text-5xl md:text-6xl font-bold text-black">Trick Or Treat</h2>
+    <h2 class="mt-10 mb-28 text-5xl md:text-6xl font-bold text-black" :style="{color: colors ? colors.color4 : '',}">Clubes que nos apoyan</h2>
     <div class="grid grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-10">
       <div 
         v-for="(tot, i) of tots" 
@@ -14,11 +22,11 @@
         "
       >
         <div>
-          <img :src="tot.image" alt="">
+          <img class="h-48 w-full" :src="tot.image" alt="">
         </div>
-        <h3 class="text-2xl lg:text-4xl font-bold">{{ tot.title }}</h3>
+        <h3 class="text-2xl lg:text-4xl font-bold" :style="{color: colors ? colors.color4 : '',}">{{ tot.title }}</h3>
         <p class="w-[90%] hidden md:block
-        ">{{ tot.desc }}</p>
+        " :style="{color: colors ? colors.color4 : '',}">{{ tot.desc }}</p>
       </div>
     </div>
   </section>

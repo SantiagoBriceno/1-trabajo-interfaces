@@ -8,22 +8,26 @@ defineProps({
         required: false,
     },
 });
+
+
+
 </script>
 
 <template>
     <section id="home" class="grid place-items-center overflow-hidden">
         <div
-            class="grid grid-flow-row-dense grid-cols-1 lg:grid-cols-2 items-end w-full px-0 lg:px-10 place-items-center text-center p-4 rounded-md mt-20 text-black bg-gradient-to-b from-primary-200/20 to-primary-200/10"
+            class="grid grid-flow-row-dense grid-cols-1 lg:grid-cols-2  w-full px-0 lg:px-10 place-items-center items-center justify-centertext-center p-4 rounded-md mt-20 text-black bg-gradient-to-b from-primary-200/20 to-primary-200/10"
             :style="{ background: colors ? colors.color3 : '' }"
         >
             <div
-                class="text-5xl md:text-6xl font-bold text-white w-full pb-20 order-2 lg:order-1"
+                class="text-5xl md:text-6xl font-bold text-white w-full pb-20 order-2 lg:order-1 justify-center items-center"
                 :style="{ color: colors ? colors.color4 : '' }"
             >
                 <div class="flex items-center justify-center gap-3">
                     <img
+                        v-if="colors"
                         class="w-1/6"
-                        src="../assets/images/head1-img.png"
+                        :src="`/images/${colors.file}`"
                         alt="head1-img"
                     />
                 </div>
@@ -43,23 +47,27 @@ defineProps({
 @media (min-width: 768px) {
     .container {
         max-width: 100%;
+        margin: 0;
     }
 
     @media (min-width: 1024px) {
         .container {
             max-width: 100%;
+            margin: 0;
         }
     }
 
     @media (min-width: 1280px) {
         .container {
             max-width: 100%;
+            margin: 0;
         }
     }
 
     @media (min-width: 1536px) {
         .container {
             max-width: 100%;
+            margin: 0;
         }
     }
 }
