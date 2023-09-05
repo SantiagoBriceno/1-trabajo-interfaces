@@ -17,6 +17,10 @@ defineProps({
         type: Object,
         required: false,
     },
+    company: {
+        type: Object,
+        required: false,
+    },
 });
 </script>
 
@@ -34,6 +38,7 @@ defineProps({
             :canRegister="canRegister"
             :isAuth="$page.props.auth.user"
             :colors="colors"
+            :company="company"
         />
         <a href="company/colors">
             <div class="flex flex-col mt-20" v-if="colors">
@@ -70,6 +75,6 @@ defineProps({
         <Home :colors="colors" />
         <Category :colors="colors" />
         <TrickOrTreat :colors="colors" />
-        <Footer :colors="colors" />
+        <Footer :colors="colors" :company="company"/>
     </div>
 </template>

@@ -244,7 +244,7 @@ const editColors = (event) => {
                             <img
                                 class="w-full h-auto py-20"
                                 id="logo"
-                                :src="`/images/${colors.file}`"
+                                :src="`/images/${colors[0].file}`"
                                 alt=""
                             />
                         </div>

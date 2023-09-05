@@ -35,11 +35,13 @@ Route::get('/', function () {
 //RUTA INDEX PAGE PROPUESTA
 Route::get('/index', function () {
     $colors = Colors::all()->first();
+    $company = Empresa::all()->first();
 
     return Inertia::render('App', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'colors' => $colors
+        'colors' => $colors,
+        'company' => $company,
     ]);
 })->name('index');
 
@@ -231,8 +233,6 @@ Route::middleware('auth.admin')->post('company/colors', function () {
             $filename = $file->getClientOriginalName();
             $colors->file = $filename;
             $file->move(public_path('images'), $filename);
-        } else {
-            $colors->file = null;
         }
         $colors->save();
         return redirect()->route('colors.edit');

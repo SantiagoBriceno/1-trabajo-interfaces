@@ -16,6 +16,19 @@ onMounted(() => {
 }
 })
 
+const splitName = (name) => {
+  if(name.split(' ').length > 1) {
+    return name.split(' ')
+  }else{
+    
+    const limit = Math.floor(name.length / 3) * 2
+    const first = name.slice(0, limit)
+    const second = name.slice(limit, name.length)
+    return [first, second]
+  }
+  
+}
+
 defineProps({
   canLogin: {
     type: Boolean,
@@ -29,18 +42,21 @@ defineProps({
   colors:{
     type: Object,
     required: false,
-  }
+  },
+  company: {
+    type: Object,
+    required: false,
+  },
 });
 </script>
 
 <template>
+  {{  }}
   <nav ref="navbar" class="fixed top-0 left-0 w-full bg-primary-200 z-20 transition duration-200" :style="{backgroundColor: colors ? colors.color1 : '',}">
     <div class="container flex items-center justify-between h-20">
       <div class="relative z-30 flex items-center gap-2 mb-2 lg:mb-0">
-        <h1 class="text-white font-bold text-lg lg:text-2xl" :style="{color: colors ? colors.color4 : '',}">Hallow<span class="text-secondary" :style="{color: colors ? colors.color2 : '',}">ee</span >d</h1>
-        <svg class="w-7 lg:w-9" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8.39575 7.75016C9.64867 7.75016 10.8112 8.396 11.767 9.53266C12.4774 8.77058 13.317 8.21516 14.2083 7.94391V5.16683C14.2083 4.48169 14.4804 3.82461 14.9649 3.34014C15.4494 2.85567 16.1064 2.5835 16.7916 2.5835H19.3749V5.16683H16.7916V7.94391C17.6828 8.21516 18.5224 8.77058 19.2328 9.53266C20.1887 8.396 21.3512 7.75016 22.6041 7.75016C25.8333 7.75016 28.4166 12.0902 28.4166 17.4377C28.4166 22.7852 25.8333 27.1252 22.6041 27.1252C21.3512 27.1252 20.1887 26.4793 19.2328 25.3427C18.1866 26.4793 16.8949 27.1252 15.4999 27.1252C14.1049 27.1252 12.8133 26.4793 11.767 25.3427C10.8112 26.4793 9.64867 27.1252 8.39575 27.1252C5.16659 27.1252 2.58325 22.7852 2.58325 17.4377C2.58325 12.0902 5.16659 7.75016 8.39575 7.75016ZM11.6249 12.9168L10.0103 15.8231H13.2395L11.6249 12.9168ZM19.3749 12.9168L17.7603 15.8231H20.9895L19.3749 12.9168ZM10.3333 21.9585H12.9166L14.2083 20.6668L15.4999 21.9585H18.0833L19.3749 20.6668L20.6666 21.9585L22.6041 18.0835L17.9799 18.8843L16.7916 20.6668L15.4999 19.3752H12.9166L11.6249 20.6668L10.3333 19.3752L7.74992 18.0835L10.3333 21.9585Z" fill="white"/>
-        </svg>
+        <h1 class="text-white font-bold text-lg lg:text-2xl" :style="{color: colors ? colors.color4 : '',}">{{ company ? `${splitName(company.name)[0]}` : 'Hallow' }}<span class="text-secondary" :style="{color: colors ? colors.color2 : '',}">{{ company ? splitName(company.name)[1] : 'ee' }}</span ></h1>
+          <svg  class="w-7 lg:w-9" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M19.071 4.929a9.936 9.936 0 0 0-7.07-2.938 9.943 9.943 0 0 0-7.072 2.938c-3.899 3.898-3.899 10.243 0 14.142a9.94 9.94 0 0 0 7.073 2.938 9.936 9.936 0 0 0 7.07-2.937c3.899-3.898 3.899-10.243-.001-14.143zM12.181 4h-.359c.061-.001.119-.009.18-.009s.118.008.179.009zm6.062 13H16l-1.258 2.516a7.956 7.956 0 0 1-2.741.493 7.96 7.96 0 0 1-2.746-.494L8 17.01H5.765a7.96 7.96 0 0 1-1.623-3.532L6 11 4.784 8.567a7.936 7.936 0 0 1 1.559-2.224 7.994 7.994 0 0 1 3.22-1.969L12 6l2.438-1.625a8.01 8.01 0 0 1 3.22 1.968 7.94 7.94 0 0 1 1.558 2.221L18 11l1.858 2.478A7.952 7.952 0 0 1 18.243 17z"></path><path d="m8.5 11 1.5 4h4l1.5-4L12 8.5z"></path></svg>
       </div>
       <div class="flex lg:hidden items-center gap-2">
         <button @click="showMenu = !showMenu" class="relative z-30 text-white -mt-2 p-2" :style="{color: colors ? colors.color4 : '',}">

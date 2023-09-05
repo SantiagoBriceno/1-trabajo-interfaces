@@ -17,7 +17,7 @@ defineProps({
     <section id="home" class="grid place-items-center overflow-hidden">
         <div
             class="grid grid-flow-row-dense grid-cols-1 lg:grid-cols-2  w-full px-0 lg:px-10 place-items-center items-center text-center justify-centertext-center p-4 rounded-md mt-20 text-black bg-gradient-to-b from-primary-200/20 to-primary-200/10 bg-transparent"
-            :style="{ background: colors ? `${colors.color2}99` : '' }"
+            :style="{ background: colors ? `${colors.color2}` : '' }"
         >
             <div
                 class="text-5xl md:text-6xl font-bold text-white w-full pb-20 order-2 lg:order-1 justify-center items-center"
