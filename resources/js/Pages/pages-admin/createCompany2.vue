@@ -24,6 +24,10 @@ defineProps({
     empresa: {
         type: Array,
     },
+    colors: {
+        type: Object,
+        required: false,
+    },
 });
 
 let statesOptions = ref([]);
@@ -204,7 +208,7 @@ const registerCompany = (event) => {
             },
         });
     } else {
-        alert('Invalid camps in form');
+        alert("Invalid camps in form");
     }
 };
 
@@ -238,7 +242,6 @@ const editCompany = (event) => {
 };
 
 const deleteCompany = (event) => {
-
     router.delete(route("company.delete"), {
         preserveScroll: true,
         onSuccess: () => {
@@ -282,8 +285,11 @@ const deleteCompany = (event) => {
                     : empresa[0].direccion,
         })
     }}
-    <Head title="Mi Empresa" />
-    <LayoutAuthenticated>
+    <Head title="Mi Empresa">
+        <meta name="description" content="Dashboard" />
+        <link v-if="colors.file" rel="icon" :href="`/images/${colors.file}`" />
+    </Head>
+    <LayoutAuthenticated :colors="colors">
         <SectionMain>
             <div class="flex flex-wrap mb-4 h-128">
                 <div
@@ -292,6 +298,9 @@ const deleteCompany = (event) => {
                     <div class="flex flex-col justify-center">
                         <div
                             class="rounded-full h-48 w-48 flex bg-teal-400 m-2 text-center justify-center items-center text-white"
+                            :style="{
+                                color: colors ? colors.color4 : '', backgroundColor: colors ? colors.color2 : ''
+                            }"
                         >
                             <h1 class="text-7xl text-center">
                                 {{
@@ -306,6 +315,9 @@ const deleteCompany = (event) => {
 
                 <div
                     class="w-1/3 mr-auto bg-white-400 flex justify-center items-center"
+                    :style="{
+                        color: colors ? colors.color4 : ''
+                    }"
                 >
                     <div class="space-y-3 text-center md:text-left lg:mx-12">
                         <h1 class="text-4xl">
@@ -335,6 +347,7 @@ const deleteCompany = (event) => {
                             v-if="editData.status"
                             class="inline-flex items-center capitalize leading-none text-sm border rounded-full py-1.5 px-4 bg-blue-500 border-blue-500 text-white"
                             bis_skin_checked="1"
+                            :style="{color: colors ? colors.color4 : '', backgroundColor: colors ? colors.color3 : ''}"
                         >
                             <span
                                 class="inline-flex justify-center items-center w-4 h-4 mr-2"
@@ -354,6 +367,7 @@ const deleteCompany = (event) => {
                             v-else-if="deleteCompanyCondition"
                             class="inline-flex items-center capitalize leading-none text-sm border rounded-full py-1.5 px-4 bg-blue-500 border-blue-500 text-white"
                             bis_skin_checked="1"
+                            :style="{color: colors ? colors.color4 : '', backgroundColor: colors ? colors.color3 : ''}"
                         >
                             <span
                                 class="inline-flex justify-center items-center w-4 h-4 mr-2"
@@ -380,6 +394,7 @@ const deleteCompany = (event) => {
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 for="company-name"
+                                :style="{color: colors ? colors.color4 : ''}"
                             >
                                 Nombre de la empresa
                             </label>
@@ -387,6 +402,7 @@ const deleteCompany = (event) => {
                                 v-on:change="editInput.push('name')"
                                 v-model="editData.name"
                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                :style="{color: colors ? colors.color5 : '', backgroundColor: colors ? colors.color4 : ''}"
                                 :class="{
                                     valid: verifyField('name') == true,
                                     inValid: verifyField('name') == false,
@@ -398,6 +414,7 @@ const deleteCompany = (event) => {
                             <p
                                 v-if="verifyField('name') == false"
                                 class="text-red-600 text-xs italic"
+                                :style="{color: colors ? colors.color3 : ''}"
                             >
                                 Por favor coloca un nombre válido
                             </p>
@@ -409,6 +426,7 @@ const deleteCompany = (event) => {
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 for="company-name"
+                                :style="{color: colors ? colors.color4 : ''}"
                             >
                                 Rif de la empresa
                             </label>
@@ -419,6 +437,7 @@ const deleteCompany = (event) => {
                                 v-model="editData.rif"
                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="company-name"
+                                :style="{color: colors ? colors.color5 : '', backgroundColor: colors ? colors.color4 : ''}"
                                 :class="{
                                     valid: verifyField('rif') == true,
                                     inValid: verifyField('rif') == false,
@@ -441,6 +460,7 @@ const deleteCompany = (event) => {
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 for="first-email"
+                                :style="{color: colors ? colors.color4 : ''}"
                             >
                                 1er Email
                             </label>
@@ -449,6 +469,7 @@ const deleteCompany = (event) => {
                                 v-model="editData.email"
                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                 id="first-email"
+                                :style="{color: colors ? colors.color5 : '', backgroundColor: colors ? colors.color4 : ''}"
                                 :class="{
                                     valid: verifyField('email') == true,
                                     inValid: verifyField('email') == false,
@@ -459,6 +480,7 @@ const deleteCompany = (event) => {
                             <p
                                 v-if="verifyField('email') == false"
                                 class="text-red-500 text-xs italic"
+                                :style="{color: colors ? colors.color3 : ''}"
                             >
                                 Por favor ingresa un email válido.
                             </p>
@@ -467,6 +489,7 @@ const deleteCompany = (event) => {
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 for="grid-last-name"
+                                :style="{color: colors ? colors.color4 : ''}"
                             >
                                 2do Email
                             </label>
@@ -474,6 +497,7 @@ const deleteCompany = (event) => {
                                 v-on:change="editInput.push('email2')"
                                 v-model="editData.email2"
                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                :style="{color: colors ? colors.color5 : '', backgroundColor: colors ? colors.color4 : ''}"
                                 :class="{
                                     valid: verifyField('email2') == true,
                                     inValid: verifyField('email2') == false,
@@ -485,7 +509,9 @@ const deleteCompany = (event) => {
                             <p
                                 v-if="verifyField('email2') == false"
                                 class="text-red-500 text-xs italic"
-                            >Por favor ingresa un email válido.</p>
+                            >
+                                Por favor ingresa un email válido.
+                            </p>
                         </div>
                     </div>
 
@@ -494,6 +520,7 @@ const deleteCompany = (event) => {
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 for="pais"
+                                :style="{color: colors ? colors.color4 : ''}"
                             >
                                 PAIS
                             </label>
@@ -510,6 +537,7 @@ const deleteCompany = (event) => {
                                         valid: verifyField('pais') == true,
                                         inValid: verifyField('pais') == false,
                                     }"
+                                    :style="{color: colors ? colors.color5 : '', backgroundColor: colors ? colors.color4 : ''}"
                                 >
                                     <option :value="null" selected>
                                         Escoge un Pais
@@ -547,6 +575,7 @@ const deleteCompany = (event) => {
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 for="estado"
+                                :style="{color: colors ? colors.color4 : ''}"
                             >
                                 Estado
                             </label>
@@ -560,6 +589,7 @@ const deleteCompany = (event) => {
                                         valid: verifyField('estado') == true,
                                         inValid: verifyField('estado') == false,
                                     }"
+                                    :style="{color: colors ? colors.color5 : '', backgroundColor: colors ? colors.color4 : ''}"
                                 >
                                     <option :value="null" selected>
                                         Selecciona un estado
@@ -575,6 +605,7 @@ const deleteCompany = (event) => {
                                 <p
                                     v-if="verifyField('estado') == false"
                                     class="text-red-500 text-xs italic"
+                                    :style="{color: colors ? colors.color3 : ''}"
                                 >
                                     escoge un estado.
                                 </p>
@@ -600,6 +631,7 @@ const deleteCompany = (event) => {
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 for="first-phone"
+                                :style="{color: colors ? colors.color4 : ''}"
                             >
                                 NRO. TLF 1
                             </label>
@@ -611,6 +643,7 @@ const deleteCompany = (event) => {
                                     valid: verifyField('phone') == true,
                                     inValid: verifyField('phone') == false,
                                 }"
+                                :style="{color: colors ? colors.color5 : '', backgroundColor: colors ? colors.color4 : ''}"
                                 id="first-phone"
                                 type="text"
                                 :placeholder="placeholder.phone"
@@ -618,6 +651,7 @@ const deleteCompany = (event) => {
                             <p
                                 v-if="verifyField('phone') == false"
                                 class="text-red-500 text-xs italic"
+                                :style="{color: colors ? colors.color3 : ''}"
                             >
                                 Asegurate de rellenar este campo.
                             </p>
@@ -626,6 +660,7 @@ const deleteCompany = (event) => {
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 for="second-phone"
+                                :style="{color: colors ? colors.color4 : ''}"
                             >
                                 NRO. TLF 2
                             </label>
@@ -637,6 +672,7 @@ const deleteCompany = (event) => {
                                     valid: verifyField('phone2') == true,
                                     inValid: verifyField('phone2') == false,
                                 }"
+                                :style="{color: colors ? colors.color5 : '', backgroundColor: colors ? colors.color4 : ''}"
                                 id="second-phone"
                                 type="text"
                                 :placeholder="placeholder.phone2"
@@ -644,19 +680,19 @@ const deleteCompany = (event) => {
                             <p
                                 v-if="verifyField('phone2') == false"
                                 class="text-red-500 text-xs italic"
+                                :style="{color: colors ? colors.color3 : ''}"
                             >
                                 Formato invalido.
                             </p>
                         </div>
                     </div>
 
-                    
-
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full px-3">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 for="direction"
+                                :style="{color: colors ? colors.color4 : ''}"
                             >
                                 DIRECCIÓN
                             </label>
@@ -666,6 +702,7 @@ const deleteCompany = (event) => {
                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="direction"
                                 type="text"
+                                :style="{color: colors ? colors.color5 : '', backgroundColor: colors ? colors.color4 : ''}"
                                 :placeholder="placeholder.direccion"
                                 :class="{
                                     valid: verifyField('direccion') == true,
@@ -679,6 +716,7 @@ const deleteCompany = (event) => {
                         class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                         type="submit"
                         v-on:click="registerCompany"
+                        :style="{color: colors ? colors.color4 : '', backgroundColor: colors ? colors.color3 : ''}"
                     >
                         Registrar
                     </button>
@@ -686,6 +724,7 @@ const deleteCompany = (event) => {
                         <button
                             class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                             type="submit"
+                            :style="{color: colors ? colors.color4 : '', backgroundColor: colors ? colors.color3 : ''}"
                             v-on:click="editCompany"
                         >
                             Editar

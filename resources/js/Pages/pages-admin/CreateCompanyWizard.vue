@@ -16,6 +16,10 @@ defineProps({
     empresa: {
         type: Array,
     },
+    colors: {
+        type: Object,
+        required: false,
+    },
 });
 
 let deleteCompanyCondition = ref(false);
@@ -184,8 +188,8 @@ const nextStep = () => {
 };
 
 const rifHelper = computed(() => {
-    if(editData.rif === null){
-        return 
+    if (editData.rif === null) {
+        return;
     }
 
     if (editData.rif.length == 8) {
@@ -227,18 +231,18 @@ const verifyFormEdit = () => {
 function onComplete() {
     switch (onCompleteCondition.value) {
         case true:
-            if (verifyFormRegister()){
-                editData.rif = 'J-' + editData.rif;
+            if (verifyFormRegister()) {
+                editData.rif = "J-" + editData.rif;
                 editData.put(route("Company.wizard.register"), {
                     preserveScroll: true,
                     onSuccess: () => {
                         editData.reset();
                         editData.status = true;
-                        router.reload()
+                        router.reload();
                     },
                 });
-            }else {
-                alert('No ingresaste los datos correctamente')
+            } else {
+                alert("No ingresaste los datos correctamente");
             }
             break;
         default:
@@ -254,7 +258,6 @@ function onComplete() {
             }
             break;
     }
-    
 }
 
 const deleteCompany = () => {
@@ -285,10 +288,7 @@ const deleteCompany = () => {
             : (onCompleteCondition = false),
         (placeholder = {
             name: empresa == undefined ? "Example SA" : empresa[0].name,
-            rif:
-                empresa == undefined
-                    ? "J-01234567-0"
-                    : empresa[0].rif,
+            rif: empresa == undefined ? "J-01234567-0" : empresa[0].rif,
             email: empresa == undefined ? "Example@ex.com" : empresa[0].email,
             email2:
                 empresa == undefined
@@ -307,8 +307,11 @@ const deleteCompany = () => {
                     : empresa[0].direccion,
         }))
     }}
-    <Head title="Mi Empresa" />
-    <LayoutAuthenticated>
+    <Head title="Mi Empresa">
+        <meta name="description" content="Dashboard" />
+        <link v-if="colors.file" rel="icon" :href="`/images/${colors.file}`" />
+    </Head>
+    <LayoutAuthenticated :colors="colors">
         <SectionMain>
             <div class="flex flex-wrap mb-4 h-128">
                 <div
@@ -317,6 +320,9 @@ const deleteCompany = () => {
                     <div class="flex flex-col justify-center">
                         <div
                             class="rounded-full h-48 w-48 flex bg-teal-400 m-2 text-center justify-center items-center text-white"
+                            :style="{
+                                backgroundColor: colors ? colors.color2 : '',
+                            }"
                         >
                             <h1 class="text-7xl text-center">
                                 {{
@@ -332,7 +338,12 @@ const deleteCompany = () => {
                 <div
                     class="w-1/3 mr-auto bg-white-400 flex justify-center items-center"
                 >
-                    <div class="space-y-3 text-center md:text-left lg:mx-12">
+                    <div
+                        class="space-y-3 text-center md:text-left lg:mx-12"
+                        :style="{
+                            color: colors ? colors.color4 : '',
+                        }"
+                    >
                         <h1 class="text-4xl">
                             {{
                                 editData.name ? editData.name : placeholder.name
@@ -340,7 +351,11 @@ const deleteCompany = () => {
                         </h1>
                         <p>
                             <b>Rif:</b>
-                            {{ editData.rif ? 'J-' + editData.rif : placeholder.rif }}
+                            {{
+                                editData.rif
+                                    ? "J-" + editData.rif
+                                    : placeholder.rif
+                            }}
                         </p>
                         <p>
                             <b>Pais:</b>
@@ -360,6 +375,10 @@ const deleteCompany = () => {
                             v-if="editData.status"
                             class="inline-flex items-center capitalize leading-none text-sm border rounded-full py-1.5 px-4 bg-blue-500 border-blue-500 text-white"
                             bis_skin_checked="1"
+                            :style="{
+                                backgroundColor: colors ? colors.color3 : '',
+                                color: colors ? colors.color4 : '',
+                            }"
                         >
                             <span
                                 class="inline-flex justify-center items-center w-4 h-4 mr-2"
@@ -380,6 +399,10 @@ const deleteCompany = () => {
                             v-else-if="deleteCompanyCondition"
                             class="inline-flex items-center capitalize leading-none text-sm border rounded-full py-1.5 px-4 bg-blue-500 border-blue-500 text-white"
                             bis_skin_checked="1"
+                            :style="{
+                                backgroundColor: colors ? colors.color3 : '',
+                                color: colors ? colors.color4 : '',
+                            }"
                         >
                             <span
                                 class="inline-flex justify-center items-center w-4 h-4 mr-2"
@@ -399,7 +422,7 @@ const deleteCompany = () => {
                 </div>
             </div>
 
-            <FormWizard @on-complete="onComplete" color="#094899">
+            <FormWizard @on-complete="onComplete" :color="colors.color3">
                 <TabContent
                     title="Datos de la empresa"
                     icon="fa fa-city"

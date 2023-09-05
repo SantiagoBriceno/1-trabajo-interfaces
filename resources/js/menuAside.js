@@ -3,7 +3,8 @@ import {
   mdiMonitor,
   mdiSquareEditOutline,
   mdiTable,
-  mdiViewList
+  mdiViewList,
+  mdiHome
 } from "@mdi/js";
 
 export default [
@@ -26,6 +27,11 @@ export default [
         icon: mdiSquareEditOutline,
         href: "/company/wizard" //Colocar la ruta del segundo Formulario
       },
+      {
+        label: "Colors",
+        icon: mdiSquareEditOutline,
+        href: "/company/colors" //Colocar la ruta del tercer Formulario
+      }
     ],
   },
 
@@ -40,5 +46,11 @@ export default [
     label: "Profile",
     icon: mdiAccountCircle,
   },
+  {
+    route: "/home",
+    href: "/index",
+    label: "Home",
+    icon: mdiHome,
+  }
   
 ];

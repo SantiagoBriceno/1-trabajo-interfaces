@@ -62,13 +62,15 @@ Route::middleware('auth.admin')->group(function () {
 
 Route::middleware('auth.admin')->get('dashboard', function () {
     $users = User::all();
-    return Inertia::render('HomeView', compact('users'));
+    $colors = Colors::all()->first();
+    return Inertia::render('HomeView', compact('colors', 'users'));
 })->name('dashboard');
 
 //RUTAS PARA EL LISTADO DE TODOS LOS USUARIOS REGISTRADOS
 Route::middleware('auth.admin')->get('users', function () {
     $user = User::all();
-    return Inertia::render('pages-admin/UsersList', compact('user'));
+    $colors = Colors::all()->first();
+    return Inertia::render('pages-admin/UsersList', compact('user', 'colors'));
 })->name('User');
 
 // Route::middleware('auth.admin')->get('company', function () {
@@ -78,10 +80,11 @@ Route::middleware('auth.admin')->get('users', function () {
 
 Route::middleware('auth.admin')->get('company', function () {
     $empresa = Empresa::all();
+    $colors = Colors::all()->first();
     if (count($empresa) == 0) {
-        return Inertia::render('pages-admin/createCompany2', []);
+        return Inertia::render('pages-admin/createCompany2', compact('colors'));
     } else {
-        return Inertia::render('pages-admin/createCompany2', compact('empresa'));
+        return Inertia::render('pages-admin/createCompany2', compact('empresa', 'colors'));
     }
 })->name('Company');
 
@@ -134,10 +137,11 @@ Route::middleware('auth.admin')->delete('company', function () {
 //RUTA PARA EL REGISTRO DE UNA EMPRESA EN UN FORMULARIO TIPO WIZARD
 Route::middleware('auth.admin')->get('company/wizard', function () {
     $empresa = Empresa::all();
+    $colors = Colors::all()->first();
     if (count($empresa) == 0) {
-        return Inertia::render('pages-admin/CreateCompanyWizard', []);
+        return Inertia::render('pages-admin/CreateCompanyWizard', compact('colors'));
     } else {
-        return Inertia::render('pages-admin/CreateCompanyWizard', compact('empresa'));
+        return Inertia::render('pages-admin/CreateCompanyWizard', compact('empresa', 'colors'));
     }
 })->name('Company.wizard');
 

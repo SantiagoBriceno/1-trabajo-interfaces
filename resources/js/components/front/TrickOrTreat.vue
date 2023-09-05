@@ -18,8 +18,8 @@
         v-for="(tot, i) of tots" 
         :key="tot.title" 
         class="grid place-items-center text-center gap-5 p-8 rounded-md text-black bg-gradient-to-b from-primary-200/20 to-primary-200/10"
-        :class="i === 1 && 'from-primary-200/50 to-primary-200/30 lg:-translate-y-10' 
-        "
+        :class="i === 1 && 'from-primary-200/50 to-primary-200/30 lg:-translate-y-10'"
+        :style="{background: colors ? `${colors.color2}60` : '',}"
       >
         <div>
           <img class="h-48 w-full" :src="tot.image" alt="">

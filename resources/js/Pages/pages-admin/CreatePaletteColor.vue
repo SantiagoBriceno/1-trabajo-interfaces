@@ -3,13 +3,11 @@ import { Head, router, useForm } from "@inertiajs/vue3";
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/Layouts/LayoutAuthenticated.vue";
 
-
 import { ref, computed, onMounted } from "vue";
 
 const props = defineProps({
     colors: { type: Object },
 });
-
 
 let editData = useForm({
     color1: null,
@@ -54,16 +52,14 @@ onMounted(() => {
         document.getElementById("five-color-circle").style.backgroundColor =
             props.colors[0].color5;
     }
-
-
 });
 
 const registerColors = (event) => {
     event.preventDefault();
 
-    editData.file =img;
+    editData.file = img;
 
-    router.post('/company/colors', editData, {
+    router.post("/company/colors", editData, {
         forceFormData: true,
         preserveScroll: true,
         onSuccess: () => {
@@ -71,7 +67,7 @@ const registerColors = (event) => {
             //Aqui se refresca la pagina
             window.location.reload();
         },
-    })
+    });
 
     // editData.post(route("colors.create"),{
     //     preserveScroll: true,
@@ -87,15 +83,15 @@ const editColors = (event) => {
 
     editData.file = img;
 
-    router.post("/company/colors", editData,{
+    router.post("/company/colors", editData, {
         forceFormData: true,
         preserveScroll: true,
         onSuccess: () => {
             editData.status = true;
             //Aqui se refresca la pagina
             window.location.reload();
-        },
-    });
+        },
+    });
 };
 </script>
 
@@ -105,13 +101,14 @@ const editColors = (event) => {
     {{ (passData.color3 = editData.color3) }}
     {{ (passData.color4 = editData.color4) }}
     {{ (passData.color5 = editData.color5) }}
-    <Head title="Mis colores" />
+    <Head title="Mis colores">
+        <meta name="description" content="Mis colores" />
+        <link v-if="colors[0].file" rel="icon" :href="`/images/${colors[0].file}`" />
+    </Head>
     <LayoutAuthenticated :colors="passData">
         <SectionMain>
             <div class="bg-white-400 flex justify-center items-center">
-                <form
-                    class="flex flex-col justify-center items-center gap-10"
-                >
+                <form class="flex flex-col justify-center items-center gap-10">
                     <div class="flex justify-center items-center">
                         <div class="flex flex-col justify-center items-center">
                             <div
@@ -240,11 +237,21 @@ const editColors = (event) => {
                         class="flex flex-col justify-center items-center w-1/2"
                         :style="{ color: editData.color4 }"
                     >
-                    <div v-if="colors" class="h-48 w-48 m-2 flex text-center justify-center items-center">
-                        <img class=" w-full h-auto py-20" id = 'logo' :src="`/images/${colors[0].file}`" alt="">
-                    </div>
+                        <div
+                            v-if="colors"
+                            class="h-48 w-48 m-2 flex text-center justify-center items-center"
+                        >
+                            <img
+                                class="w-full h-auto py-20"
+                                id="logo"
+                                :src="`/images/${colors[0].file}`"
+                                alt=""
+                            />
+                        </div>
 
-                        <label class="mt-8 mb-4 text-sm font-medium" for="file_input"
+                        <label
+                            class="mt-8 mb-4 text-sm font-medium"
+                            for="file_input"
                             >Carga el logo de tu empresa</label
                         >
                         <input
@@ -277,7 +284,7 @@ const editColors = (event) => {
 
                         <button
                             v-else
-                            class="shadow hover:bg-purple-400 focus:shadow-outline  focus:outline-none font-bold py-2 px-4 rounded"
+                            class="shadow hover:bg-purple-400 focus:shadow-outline focus:outline-none font-bold py-2 px-4 rounded"
                             type="submit"
                             v-on:click="editColors"
                             :style="{

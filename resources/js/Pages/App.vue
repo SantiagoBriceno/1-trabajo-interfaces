@@ -21,7 +21,10 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Home" />
+    <Head title="Home">
+        <meta name="description" content="Dashboard" />
+        <link v-if="colors.file" rel="icon" :href="`/images/${colors.file}`" />
+    </Head>
     <div
         class="container overflow-x-hidden"
         :style="{ background: colors ? colors.color1 : '' }"
@@ -32,40 +35,41 @@ defineProps({
             :isAuth="$page.props.auth.user"
             :colors="colors"
         />
-        <div class="flex flex-col mt-20" v-if="colors">
-            <p :style="{ color: colors.color4 }"></p>
-            <div class="w-60 h-12 flex">
-                <div
-                    class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]"
-                    :style="{ backgroundColor: colors.color1 }"
-                    :title="colors.color1"
-                ></div>
-                <div
-                    class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]"
-                    :style="{ backgroundColor: colors.color2 }"
-                    :title="colors.color2"
-                ></div>
-                <div
-                    class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]"
-                    :style="{ backgroundColor: colors.color3 }"
-                    :title="colors.color3"
-                ></div>
-                <div
-                    class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]"
-                    :style="{ backgroundColor: colors.color4 }"
-                    :title="colors.color4"
-                ></div>
-                <div
-                    class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]"
-                    :style="{ backgroundColor: colors.color5 }"
-                    :title="colors.color5"
-                ></div>
+        <a href="company/colors">
+            <div class="flex flex-col mt-20" v-if="colors">
+                <p :style="{ color: colors.color4 }"></p>
+                <div class="w-60 h-12 flex">
+                    <div
+                        class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]"
+                        :style="{ backgroundColor: colors.color1 }"
+                        :title="colors.color1"
+                    ></div>
+                    <div
+                        class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]"
+                        :style="{ backgroundColor: colors.color2 }"
+                        :title="colors.color2"
+                    ></div>
+                    <div
+                        class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]"
+                        :style="{ backgroundColor: colors.color3 }"
+                        :title="colors.color3"
+                    ></div>
+                    <div
+                        class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]"
+                        :style="{ backgroundColor: colors.color4 }"
+                        :title="colors.color4"
+                    ></div>
+                    <div
+                        class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]"
+                        :style="{ backgroundColor: colors.color5 }"
+                        :title="colors.color5"
+                    ></div>
+                </div>
             </div>
-        </div>
+        </a>
         <Home :colors="colors" />
         <Category :colors="colors" />
-        <TrickOrTreat :colors="colors"/>
-        <Footer />
-        <p class="text-black">{{ colors }}</p>
+        <TrickOrTreat :colors="colors" />
+        <Footer :colors="colors" />
     </div>
 </template>
