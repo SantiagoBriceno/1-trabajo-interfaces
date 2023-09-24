@@ -55,7 +55,7 @@ defineProps({
   <nav ref="navbar" class="fixed top-0 left-0 w-full bg-primary-200 z-20 transition duration-200" :style="{backgroundColor: colors ? colors.color1 : '',}">
     <div class="container flex items-center justify-between h-20">
       <div class="relative z-30 flex items-center gap-2 mb-2 lg:mb-0">
-        <h1 class="text-white font-bold text-lg lg:text-2xl" :style="{color: colors ? colors.color4 : '',}">{{ company ? `${splitName(company.name)[0]}` : 'Hallow' }}<span class="text-secondary" :style="{color: colors ? colors.color2 : '',}">{{ company ? splitName(company.name)[1] : 'ee' }}</span ></h1>
+        <h1 class="text-white font-bold text-lg lg:text-2xl" :style="{color: colors ? colors.color4 : '',}">{{ company ? `${splitName(company.name)[0]} ` : 'Hallow' }}<span class="text-secondary" :style="{color: colors ? colors.color5 : '',}">{{ company ? splitName(company.name)[1] : 'eed' }}</span ></h1>
           <svg  class="w-7 lg:w-9" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M19.071 4.929a9.936 9.936 0 0 0-7.07-2.938 9.943 9.943 0 0 0-7.072 2.938c-3.899 3.898-3.899 10.243 0 14.142a9.94 9.94 0 0 0 7.073 2.938 9.936 9.936 0 0 0 7.07-2.937c3.899-3.898 3.899-10.243-.001-14.143zM12.181 4h-.359c.061-.001.119-.009.18-.009s.118.008.179.009zm6.062 13H16l-1.258 2.516a7.956 7.956 0 0 1-2.741.493 7.96 7.96 0 0 1-2.746-.494L8 17.01H5.765a7.96 7.96 0 0 1-1.623-3.532L6 11 4.784 8.567a7.936 7.936 0 0 1 1.559-2.224 7.994 7.994 0 0 1 3.22-1.969L12 6l2.438-1.625a8.01 8.01 0 0 1 3.22 1.968 7.94 7.94 0 0 1 1.558 2.221L18 11l1.858 2.478A7.952 7.952 0 0 1 18.243 17z"></path><path d="m8.5 11 1.5 4h4l1.5-4L12 8.5z"></path></svg>
       </div>
       <div class="flex lg:hidden items-center gap-2">
@@ -77,9 +77,9 @@ defineProps({
         :class="!showMenu ? 'translate-y-[-150%]' : '-translate-y-0'"
       >
         <a @click="showMenu = false" class="text-white font-medium" href="#home" :style="{color: colors ? colors.color4 : '',}">Home</a>
-        <a @click="showMenu = false" class="text-white font-medium" href="#category" :style="{color: colors ? colors.color4 : '',}">Category</a>
-        <a @click="showMenu = false" class="text-white font-medium" href="#about" :style="{color: colors ? colors.color4 : '',}">About</a>
-        <a @click="showMenu = false" class="text-white font-medium" href="#trick-or-treat" :style="{color: colors ? colors.color4 : '',}">Trick or Treat</a>
+        <a @click="showMenu = false" class="text-white font-medium" href="#category" :style="{color: colors ? colors.color4 : '',}">Categorías</a>
+        <a @click="showMenu = false" class="text-white font-medium" href="#trick-or-treat" :style="{color: colors ? colors.color4 : '',}">Clubes</a>
+        <a @click="showMenu = false" class="text-white font-medium" href="#footer" :style="{color: colors ? colors.color4 : '',}">Footer</a>
 
 
         <div v-if= "canLogin" class = "flex gap-1.5">
