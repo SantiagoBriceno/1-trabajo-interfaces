@@ -13,6 +13,13 @@ const form = useForm({
     password_confirmation: '',
 });
 
+defineProps({
+    colors:{
+        type: Object,
+        required: false,
+    },
+})
+
 const submit = () => {
     form.post(route('register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),

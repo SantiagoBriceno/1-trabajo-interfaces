@@ -14,6 +14,10 @@ defineProps({
     status: {
         type: String,
     },
+    colors:{
+    type: Object,
+    required: false,
+  },
 });
 
 const form = useForm({
