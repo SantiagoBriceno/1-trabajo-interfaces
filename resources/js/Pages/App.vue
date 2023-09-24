@@ -5,8 +5,9 @@ import Category from "@/components/front/Category.vue";
 import TrickOrTreat from "@/components/front/TrickOrTreat.vue";
 import Footer from "@/components/front/Footer.vue";
 import { Head } from "@inertiajs/vue3";
+import NewBanner from "@/components/front/NewBanner.vue";
 
-defineProps({
+let props = defineProps({
     canLogin: {
         type: Boolean,
     },
@@ -21,7 +22,28 @@ defineProps({
         type: Object,
         required: false,
     },
+    media: {
+        type: Object,
+        required: false,
+    },
 });
+
+const redesSociales = [
+    {
+        image: props.media.media1,
+        url : props.media.url1
+    },
+    {
+        image: props.media.media2 ? props.media.media2 : null,
+        url : props.media.url2 ? props.media.url2 : null
+    },
+    {
+        image: props.media.media3 ? props.media.media3 : null,
+        url : props.media.url3 ? props.media.url3 : null
+    }
+]
+
+console.log(props.media);
 </script>
 
 <template>
@@ -76,5 +98,12 @@ defineProps({
         <Category :colors="colors" />
         <TrickOrTreat :colors="colors" />
         <Footer :colors="colors" :company="company"/>
+        <NewBanner v-if="media != null" :colors="colors" :media="redesSociales"/>
     </div>
 </template>
+
+<style>
+    body{
+        overflow-x: hidden;
+    }
+</style>

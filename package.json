@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "@formkit/vue": "^0.19.0-ea7e008",
+        "boxicons": "^2.1.4",
         "swiper": "^10.1.0",
         "vue3-form-wizard": "^0.2.1"
     }

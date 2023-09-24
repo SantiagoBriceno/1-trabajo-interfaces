@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Models\User;
 use App\Models\Empresa;
 use App\Models\Colors;
+use App\Models\Media;
 use Illuminate\Support\Facades\Storage;
 
 /*
@@ -36,12 +37,14 @@ Route::get('/', function () {
 Route::get('/index', function () {
     $colors = Colors::all()->first();
     $company = Empresa::all()->first();
+    $media = Media::all()->first();
 
     return Inertia::render('App', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'colors' => $colors,
         'company' => $company,
+        'media' => $media,
     ]);
 })->name('index');
 
@@ -253,4 +256,61 @@ Route::middleware('auth.admin')->patch('company/colors', function () {
     return redirect()->route('colors.edit');
 })->name('colors.edit');
 
+Route::middleware('auth.admin')->get('company/media', function () {
+    $colors = Colors::all();
+    $media = Media::all();
+    if (count($media) == 0) {
+        return Inertia::render('pages-admin/CreateMedia', compact('colors'));
+    } else {
+        return Inertia::render('pages-admin/CreateMedia', compact('colors', 'media'));
+    }
+})->name('Company.media');
+
+Route::middleware('auth.admin')->post('company/media', function () {
+    $media = Media::all()->first();
+    if ($media == null) {
+        $media = new Media();
+        $media->url1 = request()->url1;
+        $media->url2 = request()->url2 ?? null;
+        $media->url3 = request()->url3 ?? null;
+
+        if (request()->hasFile('file1')) {
+            $file = request()->file('file1');
+            $filename = $file->getClientOriginalName();
+            $media->media1 = $filename;
+            $file->move(public_path('images/media'), $filename);
+        }
+
+        if (request()->hasFile('file2')) {
+            $file = request()->file('file2');
+            $filename = $file->getClientOriginalName();
+            $media->media2 = $filename;
+            $file->move(public_path('images/media'), $filename);
+        }
+
+        if (request()->hasFile('file3')) {
+            $file = request()->file('file3');
+            $filename = $file->getClientOriginalName();
+            $media->media3 = $filename;
+            $file->move(public_path('images/media'), $filename);
+        }
+
+        $media->save();
+        return redirect()->route('Company.media');
+    }
+})->name('media.create');
+//Ruta para editar una empresa
+Route::middleware('auth.admin')->patch('company/media', function () {
+    //Obtengo la unica empresa que esta registrada
+    $colors = Colors::all()->first();
+
+    //Actualizo los datos con los campos no nulos de la request
+    $colors->color1 = request()->color1 ?? $colors->color1;
+    $colors->color2 = request()->color2 ?? $colors->color2;
+    $colors->color3 = request()->color3 ?? $colors->color3;
+    $colors->color4 = request()->color4 ?? $colors->color4;
+    $colors->color5 = request()->color5 ?? $colors->color5;
+    $colors->save();
+    return redirect()->route('colors.edit');
+})->name('media.edit');
 require __DIR__ . '/auth.php';
