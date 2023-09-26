@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Colors;
 
 class RegisteredUserController extends Controller
 {
@@ -21,7 +22,10 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        $colors = Colors::all()->first();
+        return Inertia::render('Auth/Register', [
+            'colors' => $colors
+        ]);
     }
 
     /**

@@ -17,6 +17,10 @@ const props = defineProps({
   isForm: Boolean,
   isHoverable: Boolean,
   isModal: Boolean,
+  colors: {
+    type: Object,
+    required: false,
+  },
 });
 
 const emit = defineEmits(["submit"]);
@@ -49,6 +53,7 @@ const submit = (event) => {
     :is="isForm ? 'form' : 'div'"
     :class="componentClass"
     class="bg-white flex"
+    :style="{ backgroundColor: colors ? colors.color2 : '', color: colors ? colors.color5 : '' }"
     @submit="submit"
   >
     <slot v-if="hasComponentLayout" />

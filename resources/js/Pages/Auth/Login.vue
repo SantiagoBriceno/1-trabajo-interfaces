@@ -19,6 +19,10 @@ const props = defineProps({
   status: {
     type: String,
     default: null
+  },
+  colors: {
+    type: Object,
+    required: false
   }
 })
 
@@ -41,14 +45,16 @@ const submit = () => {
 </script>
 
 <template>
-  <LayoutGuest>
+  <LayoutGuest :colors="colors">
     <Head title="Login" />
 
     <SectionFullScreen
+      :colors = "colors"
       v-slot="{ cardClass }"
       bg="purplePink"
     >
       <CardBox
+        :colors="colors"
         :class="cardClass"
         is-form
         @submit.prevent="submit"
@@ -108,6 +114,7 @@ const submit = () => {
               label="Login"
               :class="{ 'opacity-25': form.processing }"
               :disabled="form.processing"
+              :style="{ backgroundColor: colors ? colors.color3 : '', color: colors ? colors.color4 : '' }"
             />
             <BaseButton
               v-if="canResetPassword"
@@ -115,6 +122,7 @@ const submit = () => {
               color="info"
               outline
               label="Remind"
+              :style="{ backgroundColor: colors ? colors.color3 : '', color: colors ? colors.color4 : '' }"
             />
           </BaseButtons>
           <Link

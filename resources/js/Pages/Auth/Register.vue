@@ -21,6 +21,14 @@ const form = useForm({
   terms: [],
 });
 
+const props = defineProps({
+  colors: {
+    type: Object,
+    required: false,
+  }
+});
+
+
 const hasTermsAndPrivacyPolicyFeature = computed(
   () => usePage().props.jetstream?.hasTermsAndPrivacyPolicyFeature
 );
@@ -38,11 +46,12 @@ const submit = () => {
 </script>
 
 <template>
-  <LayoutGuest>
+  <LayoutGuest :colors="colors">
     <Head title="Register" />
 
-    <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
+    <SectionFullScreen v-slot="{ cardClass }" bg="purplePink" :colors="colors">
       <CardBox
+        :colors="colors"
         :class="cardClass"
         class="my-24"
         is-form
@@ -117,13 +126,14 @@ const submit = () => {
 
         <BaseButtons>
           <BaseButton
+            :style="{backgroundColor: colors ? colors.color3 : '', color: colors ? colors.color4 : '' }"
             type="submit"
             color="info"
             label="Register"
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
           />
-          <BaseButton route-name="login" color="info" outline label="Login" />
+          <BaseButton route-name="login" color="info" outline label="Login" :style="{backgroundColor: colors ? colors.color3 : '', color: colors ?  colors.color4 : ''}" />
         </BaseButtons>
       </CardBox>
     </SectionFullScreen>

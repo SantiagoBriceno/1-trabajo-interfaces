@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Colors;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -19,9 +20,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): Response
     {
+        $colors = Colors::all()->first();
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
+            'colors' => $colors
         ]);
     }
 
