@@ -30,16 +30,16 @@ let props = defineProps({
 
 const redesSociales = [
     {
-        image: props.media.media1,
-        url : props.media.url1
+        image: props.media ? props.media.media1 : null,
+        url : props.media ? props.media.url1 : null
     },
     {
-        image: props.media.media2 ? props.media.media2 : null,
-        url : props.media.url2 ? props.media.url2 : null
+        image: props.media ? props.media.media2 : null,
+        url : props.media ? props.media.url2 : null
     },
     {
-        image: props.media.media3 ? props.media.media3 : null,
-        url : props.media.url3 ? props.media.url3 : null
+        image: props.media ? props.media.media3 : null,
+        url : props.media ? props.media.url3 : null
     }
 ]
 

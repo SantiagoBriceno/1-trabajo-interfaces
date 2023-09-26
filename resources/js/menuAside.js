@@ -31,16 +31,21 @@ export default [
         label: "Colors",
         icon: mdiSquareEditOutline,
         href: "/company/colors" //Colocar la ruta del tercer Formulario
+      },
+      {
+        label: "Social Media",
+        icon: mdiSquareEditOutline,
+        href: "/company/media" //Colocar la ruta del cuarto Formulario
       }
     ],
   },
 
-  {
-    href: "/users",
-    route: 'users', // Verificar que sea ka ruta de mostrar las tablas
-    label: "Usuarios",
-    icon: mdiTable,
-  },
+  // {
+  //   href: "/users",
+  //   route: 'users', // Verificar que sea ka ruta de mostrar las tablas
+  //   label: "Usuarios",
+  //   icon: mdiTable,
+  // },
   {
     route: "/profile",
     label: "Profile",

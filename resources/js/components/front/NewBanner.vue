@@ -3,7 +3,6 @@ import { mdiArrowLeftDropCircleOutline } from '@mdi/js';
 import facebook from '../assets/media/facebook.png'
 import instagram from '../assets/media/instagram.png'
 import whatsapp from '../assets/media/whatsapp.png'
-
 import Cube from '@/components/front/Cube.vue';
   defineProps({
     colors:{
@@ -29,8 +28,8 @@ const moveCircle = () => {
   </div>
   <div>
     <!-- Aqui va un boton que hara que el container circle se desplace a la izquierda -->
-    <button @click="moveCircle" class="active-button" :style="{background: colors ? colors.color2  : '#c2c2c2', color: colors ? colors.color4 : '#fff'}">
-      <h1>aslkdjakls</h1>
+    <button @click="moveCircle" class="active-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" :style="{background: colors ? colors.color2  : '#c2c2c2', color: colors ? colors.color4 : '#fff'}">
+      <h1>◀ Social Media</h1>
     </button>
 
   </div>

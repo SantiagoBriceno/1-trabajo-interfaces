@@ -71,18 +71,6 @@ Route::middleware('auth.admin')->get('dashboard', function () {
     return Inertia::render('HomeView', compact('colors', 'users'));
 })->name('dashboard');
 
-//RUTAS PARA EL LISTADO DE TODOS LOS USUARIOS REGISTRADOS
-Route::middleware('auth.admin')->get('users', function () {
-    $user = User::all();
-    $colors = Colors::all()->first();
-    return Inertia::render('pages-admin/UsersList', compact('user', 'colors'));
-})->name('User');
-
-// Route::middleware('auth.admin')->get('company', function () {
-//     $empresa = Empresa::all();
-//     return Inertia::render('pages-admin/ProfileView', compact('empresa'));
-// })->name('Company');
-
 Route::middleware('auth.admin')->get('company', function () {
     $empresa = Empresa::all();
     $colors = Colors::all()->first();
