@@ -10,8 +10,6 @@ const props = defineProps({
     media: { type: Object },
 });
 
-console.log(props);
-
 let editData = useForm({
     file1: null,
     url1: null,
@@ -21,36 +19,19 @@ let editData = useForm({
     url3: null,
 });
 
-const catchImg = (event) => {
-    files1 = event.target.files[0];
-    console.log(img);
-};
-
-const verifyFormRegister = () => {
-    if (
-        verifyField("media1") == true &&
-        verifyField("url1") == true &&
-        verifyField("media2") == true &&
-        verifyField("url2") == true &&
-        verifyField("media3") == true &&
-        verifyField("url3") == true
-    ) {
-        return true;
-    } else {
-        return false;
-    }
-};
-
-const verifyFormEdit = () => {
-    if (editInput.value.length == 0) {
-        return false;
-    } else {
-        for (let i = 0; i < editInput.value.length; i++) {
-            if (verifyField(editInput.value[i]) == false) {
-                return false;
-            }
-        }
-        return true;
+const catchImg = (event, nroFile) => {
+    switch (nroFile) {
+        case 1:
+            files1 = event.target.files[0];
+            break;
+        case 2:
+            files2 = event.target.files[0];
+            break;
+        case 3:
+            files3 = event.target.files[0];
+            break;
+        default:
+            break;
     }
 };
 
@@ -81,14 +62,13 @@ const verifyField = (field) => {
         case "url1":
             return validarURL(editData.url1);
             break;
-
         case "media2":
             if (editData.file2 == null && editData.url2 == null) {
                 return true;
             } else if (editData.file2 == null && editData.url2 != null) {
-                return false;
+                return null;
             } else if (editData.file2 != null && editData.url2 == null) {
-                return false;
+                return null;
             } else {
                 if (validarURL(editData.url2)) {
                     return true;
@@ -100,9 +80,9 @@ const verifyField = (field) => {
             if (editData.url2 == null && editData.file2 == null) {
                 return true;
             } else if (editData.url2 == null && editData.file2 != null) {
-                return false;
+                return null;
             } else if (editData.url2 != null && editData.file2 == null) {
-                return false;
+                return null;
             } else {
                 if (validarURL(editData.url2)) {
                     return true;
@@ -114,9 +94,9 @@ const verifyField = (field) => {
             if (editData.file3 == null && editData.url3 == null) {
                 return true;
             } else if (editData.file3 == null && editData.url3 != null) {
-                return false;
+                return null;
             } else if (editData.file3 != null && editData.url3 == null) {
-                return false;
+                return null;
             } else {
                 if (validarURL(editData.url3)) {
                     return true;
@@ -128,9 +108,9 @@ const verifyField = (field) => {
             if (editData.url3 == null && editData.file3 == null) {
                 return true;
             } else if (editData.url3 == null && editData.file3 != null) {
-                return false;
+                return null;
             } else if (editData.url3 != null && editData.file3 == null) {
-                return false;
+                return null;
             } else {
                 if (validarURL(editData.url3)) {
                     return true;
@@ -142,11 +122,60 @@ const verifyField = (field) => {
     }
 };
 
+const registerValidator = () => {
+    let valid = true;
+    let fields = ["media1", "url1", "media2", "url2", "media3", "url3"];
+    let errorFields = [];
+
+    fields.forEach((field) => {
+        if (verifyField(field) == null) {
+            valid = false;
+            errorFields.push(field);
+        }
+    });
+
+    if (valid === false) {
+        if (errorFields.length === 1) {
+            alert(`El campo ${errorFields[0]} es obligatorio`);
+        } else {
+            alert(`Los campos ${errorFields.join(' y ')} son obligatorios`);
+        }
+        console.log(errorFields)
+    }
+
+    return valid;
+}
+
 let files1 = ref(null);
 let files2 = ref(null);
 let files3 = ref(null);
 
 const registerMedia = (event) => {
+    event.preventDefault();
+    editData.file1 = files1;
+    editData.file2 = files2;
+    editData.file3 = files3;
+
+    if (registerValidator() === false) {
+        return;
+    } else {
+        router.post("/company/media", editData, {
+            forceFormData: true,
+            preserveScroll: true,
+            onSuccess: () => {
+                editData.status = true;
+                //Aqui se refresca la pagina
+                window.location.reload();
+            },
+        });
+    }
+};
+
+const editValidator = () => {
+    
+}
+
+const editMedia = (event) => {
     event.preventDefault();
 
     editData.file1 = files1;
@@ -154,22 +183,6 @@ const registerMedia = (event) => {
     editData.file3 = files3;
 
     router.post("/company/media", editData, {
-        forceFormData: true,
-        preserveScroll: true,
-        onSuccess: () => {
-            editData.status = true;
-            //Aqui se refresca la pagina
-            window.location.reload();
-        },
-    });
-};
-
-const editColors = (event) => {
-    event.preventDefault();
-
-    editData.file = img;
-
-    router.post("/company/colors", editData, {
         forceFormData: true,
         preserveScroll: true,
         onSuccess: () => {
@@ -203,21 +216,13 @@ const editColors = (event) => {
                         </label>
                         <input type="file" id="first-media" :v-model="editData.file1"
                             class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            accept=".jpg, .jpeg, .png, .ico" v-on:change="catchImg($event)" :class="{
-                                valid: verifyField('media1') == true,
-                                inValid:
-                                    verifyField('media1') == false,
-                            }" />
+                            accept=".jpg, .jpeg, .png, .ico" v-on:change="catchImg($event, 1)" />
                         <div class="text-center">
                             <label for="media1-url" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                 :style="{ color: colors ? colors.color4 : '#fff' }">URL destino</label>
                             <input type="text" id="media1-url" v-model="editData.url1"
-                                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                :class="{
-                                    valid: verifyField('url1') == true,
-                                    inValid:
-                                        verifyField('url1') == false,
-                                }">
+                                :placeholder="media != null ? media[0].url1 : ''"
+                                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         </div>
                     </div>
 
@@ -234,21 +239,12 @@ const editColors = (event) => {
                         </label>
                         <input type="file" id="second-media" :v-model="editData.file2"
                             class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            accept=".jpg, .jpeg, .png, .ico" :class="{
-                                valid: verifyField('media2') == true,
-                                inValid:
-                                    verifyField('media2') == false,
-                            }" />
+                            accept=".jpg, .jpeg, .png, .ico" v-on:change="catchImg($event, 2)" />
                         <div class="text-center">
                             <label for="media2-url" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                 :style="{ color: colors ? colors.color4 : '#fff' }">URL destino</label>
                             <input type="text" id="media2-url" v-model="editData.url2"
-                                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                :class="{
-                                    valid: verifyField('url2') == true,
-                                    inValid:
-                                        verifyField('url2') == false,
-                                }">
+                                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         </div>
                     </div>
                     <!-- IMAGEN 3 -->
@@ -264,21 +260,12 @@ const editColors = (event) => {
                         </label>
                         <input type="file" id="third-media" :v-model="editData.file3"
                             class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            accept=".jpg, .jpeg, .png, .ico" :class="{
-                                valid: verifyField('media3') == true,
-                                inValid:
-                                    verifyField('media3') == false,
-                            }" />
+                            accept=".jpg, .jpeg, .png, .ico" v-on:change="catchImg($event, 3)" />
                         <div class="text-center">
                             <label for="media3-url" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                 :style="{ color: colors ? colors.color4 : '#fff' }">URL destino</label>
                             <input type="text" id="media3-url" v-model="editData.url3"
-                                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                :class="{
-                                    valid: verifyField('url3') == true,
-                                    inValid:
-                                        verifyField('url3') == false,
-                                }">
+                                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         </div>
                     </div>
 
@@ -294,7 +281,7 @@ const editColors = (event) => {
 
                         <button v-else
                             class="shadow hover:bg-purple-400 focus:shadow-outline focus:outline-none font-bold py-2 px-4 rounded"
-                            type="submit" v-on:click="" :style="{
+                            type="submit" v-on:click="editMedia" :style="{
                                 backgroundColor: colors ? colors[0].color2 : '#fff',
                                 color: colors ? colors[0].color4 : '#000',
                             }">
