@@ -34,8 +34,8 @@ const moveCircle = () => {
 
   </div>
 </template>
-
 <style>
+@media screen and (min-width: 1024px) {
   .container-circle{
     width: 250px;
     height: 900px;
@@ -63,5 +63,36 @@ const moveCircle = () => {
     right: 0px;
     background-color: rgb(0, 162, 255);
   }
+}
+  
+@media screen and (max-width: 1023px) {
+  .container-circle{
+    width: 125px;
+    height: 900px;
+    position: fixed;
+    border-radius: 20px;
+    top: 100px;
+    z-index: 1;
+    right: 80px;
+    transition: all 1s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    perspective: 2000px;
+  }
+
+  .container-circle.inactive{
+    right: -300px;
+  }
+
+  .active-button{
+    position: fixed;
+    top: 100px;
+    right: 0px;
+    background-color: rgb(0, 162, 255);
+  }
+}
 
 </style>
