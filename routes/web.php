@@ -310,3 +310,8 @@ Route::middleware('auth.admin')->patch('company/media', function () {
     return redirect()->route('colors.edit');
 })->name('media.edit');
 require __DIR__ . '/auth.php';
+
+//RUTAS PARA LOS VIDEOS DE YOUTUBE Y POST DE IG
+Route::middleware('auth.admin')->get('index/post', function () {
+    return Inertia::render('PostAndVideos');
+})->name('Company.media');
