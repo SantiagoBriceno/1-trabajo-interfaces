@@ -16,6 +16,7 @@ let editData = useForm({
     color4: null,
     color5: null,
     file: null,
+    ubication: null,
 });
 
 const catchImg = (event) => {
@@ -54,20 +55,39 @@ onMounted(() => {
     }
 });
 
+function validarURL(miurl) {
+    try {
+
+        new URL(miurl);
+        return true;
+
+    } catch (err) {
+
+        return false;
+
+    }
+}
+
 const registerColors = (event) => {
     event.preventDefault();
 
     editData.file = img;
+    console.log(editData);
 
-    router.post("/company/colors", editData, {
-        forceFormData: true,
-        preserveScroll: true,
-        onSuccess: () => {
-            editData.status = true;
-            //Aqui se refresca la pagina
-            window.location.reload();
-        },
-    });
+    if (validarURL(editData.ubication)) {
+        router.post("/company/colors", editData, {
+            forceFormData: true,
+            preserveScroll: true,
+            onSuccess: () => {
+                editData.status = true;
+                //Aqui se refresca la pagina
+                window.location.reload();
+            },
+        });
+    }else{
+        alert("La url de la ubicación no es valida");
+    }
+
 
     // editData.post(route("colors.create"),{
     //     preserveScroll: true,
@@ -83,15 +103,20 @@ const editColors = (event) => {
 
     editData.file = img;
 
-    router.post("/company/colors", editData, {
-        forceFormData: true,
-        preserveScroll: true,
-        onSuccess: () => {
-            editData.status = true;
-            //Aqui se refresca la pagina
-            window.location.reload();
-        },
-    });
+    if(validarURL(editData.ubication)){
+        router.put("/company/colors", editData, {
+            forceFormData: true,
+            preserveScroll: true,
+            onSuccess: () => {
+                editData.status = true;
+                //Aqui se refresca la pagina
+                window.location.reload();
+            },
+        });
+
+    }else{
+        alert("La url de la ubicación no es valida");
+    }
 };
 </script>
 
@@ -101,6 +126,7 @@ const editColors = (event) => {
     {{ (passData.color3 = editData.color3) }}
     {{ (passData.color4 = editData.color4) }}
     {{ (passData.color5 = editData.color5) }}
+
     <Head title="Mis colores">
         <meta name="description" content="Mis colores" />
         <link v-if="colors" rel="icon" :href="`/images/${colors[0].file}`" />
@@ -111,52 +137,33 @@ const editColors = (event) => {
                 <form class="flex flex-col justify-center items-center gap-10">
                     <div class="flex justify-center items-center">
                         <div class="flex flex-col justify-center items-center">
-                            <div
-                                id="first-color-circle"
+                            <div id="first-color-circle"
                                 class="rounded-full border-solid border-8 border-black h-48 w-48 m-2 flex text-center justify-center items-center text-white"
                                 :style="{
                                     backgroundColor: editData.color1,
                                     color: editData.color4,
-                                }"
-                            ></div>
-                            <label
-                                class="block uppercase tracking-wide text-white-700 text-xs font-bold mb-2"
-                                for="first-color"
-                            >
+                                }"></div>
+                            <label class="block uppercase tracking-wide text-white-700 text-xs font-bold mb-2"
+                                for="first-color">
                                 1er Color
                             </label>
-                            <input
-                                type="color"
-                                id="first-color"
-                                v-model="editData.color1"
-                            />
-                            <div
-                                class="text-center"
-                                :style="{ color: editData.color4 }"
-                            >
+                            <input type="color" id="first-color" v-model="editData.color1" />
+                            <div class="text-center" :style="{ color: editData.color4 }">
                                 <h2>Color primario</h2>
                                 <p>Proporción del 60%</p>
                             </div>
                         </div>
 
                         <div class="flex flex-col justify-center items-center">
-                            <div
-                                id="second-color-circle"
+                            <div id="second-color-circle"
                                 class="rounded-full border-solid border-8 border-black h-48 w-48 bg-teal-400 m-2 flex text-center justify-center items-center text-white"
-                                :style="`background-color: ${editData.color2};`"
-                            ></div>
-                            <label
-                                class="block uppercase tracking-wide text-white-700 text-xs font-bold mb-2"
-                                for="second-color"
-                            >
+                                :style="`background-color: ${editData.color2};`"></div>
+                            <label class="block uppercase tracking-wide text-white-700 text-xs font-bold mb-2"
+                                for="second-color">
                                 2do Color
                             </label>
-                            <input
-                                type="color"
-                                id="second-color"
-                                v-model="editData.color2"
-                                :style="`background-color: ${editData.color2};`"
-                            />
+                            <input type="color" id="second-color" v-model="editData.color2"
+                                :style="`background-color: ${editData.color2};`" />
                             <div class="text-center">
                                 <h2>Color Secundario</h2>
                                 <p>Proporción del 30%</p>
@@ -164,22 +171,14 @@ const editColors = (event) => {
                         </div>
 
                         <div class="flex flex-col justify-center items-center">
-                            <div
-                                id="third-color-circle"
+                            <div id="third-color-circle"
                                 class="rounded-full border-solid border-8 border-black h-48 w-48 bg-[#722727] m-2 flex text-center justify-center items-center text-white"
-                                :style="`background-color: ${editData.color3};`"
-                            ></div>
-                            <label
-                                class="block uppercase tracking-wide text-white-700 text-xs font-bold mb-2"
-                                for="third-color"
-                            >
+                                :style="`background-color: ${editData.color3};`"></div>
+                            <label class="block uppercase tracking-wide text-white-700 text-xs font-bold mb-2"
+                                for="third-color">
                                 3er Color
                             </label>
-                            <input
-                                type="color"
-                                id="third-color"
-                                v-model="editData.color3"
-                            />
+                            <input type="color" id="third-color" v-model="editData.color3" />
                             <div class="text-center">
                                 <h2>Color Terciario</h2>
                                 <p>Proporción del 10%</p>
@@ -187,22 +186,14 @@ const editColors = (event) => {
                         </div>
 
                         <div class="flex flex-col justify-center items-center">
-                            <div
-                                id="four-color-circle"
+                            <div id="four-color-circle"
                                 class="rounded-full border-solid border-8 border-black h-48 w-48 m-2 flex text-center justify-center items-center text-white"
-                                :style="`background-color: ${editData.color4};`"
-                            ></div>
-                            <label
-                                class="block uppercase tracking-wide text-white-700 text-xs font-bold mb-2"
-                                for="four-color"
-                            >
+                                :style="`background-color: ${editData.color4};`"></div>
+                            <label class="block uppercase tracking-wide text-white-700 text-xs font-bold mb-2"
+                                for="four-color">
                                 4to Color
                             </label>
-                            <input
-                                type="color"
-                                id="four-color"
-                                v-model="editData.color4"
-                            />
+                            <input type="color" id="four-color" v-model="editData.color4" />
                             <div class="text-center">
                                 <h2>Color Complementario 1</h2>
                                 <p>Color del texto</p>
@@ -210,22 +201,14 @@ const editColors = (event) => {
                         </div>
 
                         <div class="flex flex-col justify-center items-center">
-                            <div
-                                id="five-color-circle"
+                            <div id="five-color-circle"
                                 class="rounded-full border-solid border-8 border-black h-48 w-48 bg-[#1c1c1c] m-2 flex text-center justify-center items-center text-white"
-                                :style="`background-color: ${editData.color5};`"
-                            ></div>
-                            <label
-                                class="block uppercase tracking-wide text-white-700 text-xs font-bold mb-2"
-                                for="five-color"
-                            >
+                                :style="`background-color: ${editData.color5};`"></div>
+                            <label class="block uppercase tracking-wide text-white-700 text-xs font-bold mb-2"
+                                for="five-color">
                                 5to Color
                             </label>
-                            <input
-                                type="color"
-                                id="five-color"
-                                v-model="editData.color5"
-                            />
+                            <input type="color" id="five-color" v-model="editData.color5" />
                             <div class="text-center">
                                 <h2>Color Complementario 2</h2>
                                 <p>Color de algo</p>
@@ -233,65 +216,57 @@ const editColors = (event) => {
                         </div>
                     </div>
 
-                    <div
-                        class="flex flex-col justify-center items-center w-1/2"
-                        :style="{ color: editData.color4 }"
-                    >
-                        <div
-                            v-if="colors"
-                            class="h-48 w-48 m-2 flex text-center justify-center items-center"
-                        >
-                            <img
-                                class="w-full h-auto py-20"
-                                id="logo"
-                                :src="`/images/${colors[0].file}`"
-                                alt=""
-                            />
+                    <div class="flex justify-center items-center w-1/2 gap-10">
+
+
+                        <div class="flex flex-col justify-center items-center w-1/2" :style="{ color: editData.color4 }">
+                            <div v-if="colors" class="h-48 w-48 m-2 flex text-center justify-center items-center">
+                                <img class="w-full h-auto py-20" id="logo" :src="`/images/${colors[0].file}`" alt="" />
+                            </div>
+
+                            <label class="mt-8 mb-4 text-sm font-medium" for="file_input">Carga el logo de tu
+                                empresa</label>
+                            <input
+                                class="block w-full text-sm border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-red-800"
+                                id="file_input" type="file" :style="{
+                                    color: editData.color4,
+                                    backgroundColor: editData.color5,
+                                }" :v-model="editData.file" accept=".jpg, .jpeg, .png, .ico"
+                                v-on:change="catchImg($event)" />
                         </div>
 
-                        <label
-                            class="mt-8 mb-4 text-sm font-medium"
-                            for="file_input"
-                            >Carga el logo de tu empresa</label
-                        >
-                        <input
-                            class="block w-full text-sm border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-red-800"
-                            id="file_input"
-                            type="file"
-                            :style="{
-                                color: editData.color4,
-                                backgroundColor: editData.color5,
-                            }"
-                            :v-model="editData.file"
-                            accept=".jpg, .jpeg, .png, .ico"
-                            v-on:change="catchImg($event)"
-                        />
-                    </div>
+                        <div class="flex flex-col justify-center items-center w-1/2" :style="{ color: editData.color4 }">
+                            <div v-if="colors" class="h-48 w-48 m-2 flex text-center justify-center items-center">
+                                <iframe :src="colors[0].ubication" width="200" height="200" style="border:0;"
+                                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
 
+                            <label class="mt-8 mb-4 text-sm font-medium" for="ubication_input">Pega la ubicacion de tu
+                                empresa</label>
+                            <input
+                                class="block w-full text-sm border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-red-800"
+                                id="ubication_input" type="text" :style="{
+                                    color: editData.color4,
+                                    backgroundColor: editData.color5,
+                                }" v-model="editData.ubication" />
+                        </div>
+                    </div>
                     <div class="flex justify-center items-center">
-                        <button
-                            v-if="colors == undefined"
+                        <button v-if="colors == undefined"
                             class="shadow hover:bg-purple-400 focus:shadow-outline focus:outline-none font-bold py-2 px-4 rounded"
-                            type="submit"
-                            v-on:click="registerColors"
-                            :style="{
+                            type="submit" v-on:click="registerColors" :style="{
                                 backgroundColor: editData.color2,
                                 color: editData.color4,
-                            }"
-                        >
+                            }">
                             Registrar nueva paleta de colores
                         </button>
 
-                        <button
-                            v-else
+                        <button v-else
                             class="shadow hover:bg-purple-400 focus:shadow-outline focus:outline-none font-bold py-2 px-4 rounded"
-                            type="submit"
-                            v-on:click="editColors"
-                            :style="{
+                            type="submit" v-on:click="editColors" :style="{
                                 backgroundColor: editData.color2,
                                 color: editData.color4,
-                            }"
-                        >
+                            }">
                             Guardar los cambios
                         </button>
                     </div>

@@ -46,8 +46,7 @@ const transactionBarItems = computed(() => mainStore.history);
     <LayoutAuthenticated :colors="colors">
         <Head title="Dashboard">
             <meta name="description" content="Dashboard" />
-            <link
-                v-if="colors.file"
+            <link v-if = "colors != null" 
                 rel="icon"
                 :href="`/images/${colors.file}`"
             />
