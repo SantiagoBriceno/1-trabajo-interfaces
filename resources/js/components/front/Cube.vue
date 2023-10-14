@@ -43,28 +43,29 @@ defineProps({
   perspective: 500px;
 } */
 
-.cube {
+@media screen and (min-width: 1024px) {
+  .cube {
   width: 200px;
   height: 200px;
   animation: rotate 5s linear infinite;
   transform-style: preserve-3d;
-}
+  }
 
-.face {
-  background: white;
-  border: 2px solid #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .face {
+    background: white;
+    border: 2px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  font-size: 10px;
-  font-weight: bold;
-  color: #234e52;
+    font-size: 10px;
+    font-weight: bold;
+    color: #234e52;
 
-  width: 100px;
-  height: 100px;
-  position: absolute;
-}
+    width: 100px;
+    height: 100px;
+    position: absolute;
+  }
 
 .face--front {
   transform: translateZ(50px);
@@ -88,6 +89,55 @@ defineProps({
 
 .face--bottom {
   transform: rotateX(-90deg) translateZ(50px);
+}
+}
+
+@media screen and (max-width: 1023px) {
+  .cube {
+  width: 100px;
+  height: 100px;
+  animation: rotate 5s linear infinite;
+  transform-style: preserve-3d;
+  }
+
+  .face {
+    background: white;
+    border: 2px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 10px;
+    font-weight: bold;
+    color: #234e52;
+
+    width: 50px;
+    height: 50px;
+    position: absolute;
+  }
+  .face--front {
+  transform: translateZ(25px);
+}
+
+.face--right {
+  transform: rotateY(90deg) translateZ(25px);
+}
+
+.face--back {
+  transform: rotateY(180deg) translateZ(25px);
+}
+
+.face--left {
+  transform: rotateY(-90deg) translateZ(25px);
+}
+
+.face--top {
+  transform: rotateX(90deg) translateZ(25px);
+}
+
+.face--bottom {
+  transform: rotateX(-90deg) translateZ(25px);
+}
 }
 
 @keyframes rotate {
