@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Empresa;
 use App\Models\Colors;
 use App\Models\Media;
+use App\Models\Post;
 use Illuminate\Support\Facades\Storage;
 
 /*
@@ -313,6 +314,28 @@ require __DIR__ . '/auth.php';
 //RUTAS PARA LOS VIDEOS DE YOUTUBE Y POST DE IG
 Route::middleware('auth.admin')->get('index/post', function () {
     $colors = Colors::all()->first();
-    $empresa = Empresa::all();
-    return Inertia::render('PostAndVideos', compact('colors', 'empresa'));
-})->name('Company.media');
+    $company = Empresa::all()->first();
+    $post = Post::all();
+    return Inertia::render('PostAndVideos', compact('colors', 'company', 'post'));
+})->name('index.post');
+
+Route::middleware('auth.admin')->get('company/post', function () {
+    $colors = Colors::all()->first();
+    $post = Post::all();
+    return Inertia::render('pages-admin/CreatePost', compact('colors', 'post'));
+})->name('post');
+
+Route::middleware('auth.admin')->post('company/post', function () {
+    if(request()->position != null){
+        $positionDelete = request()->position;
+        $post = Post::all();
+        $post[$positionDelete]->delete();
+    }else{
+        $post = new Post();
+        $post->type = request()->type;
+        $post->url = request()->url;
+        $post->save();
+    }
+    return redirect()->route('post');
+})->name('post.create');
+

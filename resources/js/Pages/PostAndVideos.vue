@@ -1,9 +1,15 @@
 <script setup>
 import NavbarPost from "@/components/front/NavbarPost.vue";
 import TrickOrTreatPost from "@/components/front/TrickOrTreatPost.vue";
+import HomePosts from "@/components/front/HomePosts.vue";
 import Footer from "@/components/front/Footer.vue";
 import { Head } from "@inertiajs/vue3";
+import { onMounted } from "vue";
 import NewBanner from "@/components/front/NewBanner.vue";
+
+const postYoutube = props.post.filter((item) => item.type === 'youtube')
+const postInstagram = props.post.filter((item) => item.type === 'instagram')
+
 
 let props = defineProps({
   canLogin: {
@@ -24,6 +30,10 @@ let props = defineProps({
     type: Object,
     required: false,
   },
+  post: {
+    type: Array,
+    required: false,
+  },
 });
 
 const redesSociales = [
@@ -41,14 +51,14 @@ const redesSociales = [
   }
 ]
 
-console.log(props.media);
+console.log(postYoutube);
 </script>
 
 <template>
-  <!-- <Head title="Home">
+  <Head title="Post">
     <meta name="description" content="Dashboard" />
     <link v-if="colors" rel="icon" alt="Foto logo" :href="`/images/${colors.file}`" />
-  </Head> -->
+  </Head>
   <div class="container overflow-x-hidden" :style="{ background: colors ? colors.color1 : '' }">
     <NavbarPost 
       :canLogin="canLogin"
@@ -74,8 +84,8 @@ console.log(props.media);
         </div>
       </div>
     </a>
-    <TrickOrTreatPost :colors="colors" name="Youtube Posts" />
-    <TrickOrTreatPost :colors="colors" name="Instagram Posts"/>
+    <HomePosts :colors="colors" name="Youtube Posts" :post="postYoutube"/>
+    <HomePosts :colors="colors" name="Instagram Posts" :post="postInstagram"/>
     <Footer :colors="colors" :company="company" />
     <NewBanner v-if="media != null" :colors="colors" :media="redesSociales" />
   </div>
