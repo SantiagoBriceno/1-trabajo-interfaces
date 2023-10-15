@@ -171,7 +171,6 @@ Route::middleware('auth.admin')->patch('company', function () {
     return redirect()->route('Company.wizard');
 })->name('company.wizard.edit');
 
-
 //RUTA PARA ELIMINAR LA COMPANY desde Wizard
 Route::middleware('auth.admin')->delete('company/wizard', function () {
     $empresa = Empresa::all()->first();
@@ -313,5 +312,7 @@ require __DIR__ . '/auth.php';
 
 //RUTAS PARA LOS VIDEOS DE YOUTUBE Y POST DE IG
 Route::middleware('auth.admin')->get('index/post', function () {
-    return Inertia::render('PostAndVideos');
+    $colors = Colors::all()->first();
+    $empresa = Empresa::all();
+    return Inertia::render('PostAndVideos', compact('colors', 'empresa'));
 })->name('Company.media');

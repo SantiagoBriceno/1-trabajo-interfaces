@@ -2,7 +2,6 @@
 import { onMounted, ref } from "vue";
 import { Link, router } from "@inertiajs/vue3";
 
-
 const navbar = ref('')
 const showMenu = ref(false)
 
@@ -51,7 +50,7 @@ defineProps({
 </script>
 
 <template>
-  {{  }}
+  
   <nav ref="navbar" class="fixed top-0 left-0 w-full bg-primary-200 z-20 transition duration-200" :style="{backgroundColor: colors ? colors.color1 : '',}">
     <div class="container flex items-center justify-between h-20">
       <div class="relative z-30 flex items-center gap-2 mb-2 lg:mb-0">

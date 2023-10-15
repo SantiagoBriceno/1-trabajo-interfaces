@@ -1,6 +1,6 @@
 <script setup>
 import NavbarPost from "@/components/front/NavbarPost.vue";
-import TrickOrTreat from "@/components/front/TrickOrTreat.vue";
+import TrickOrTreatPost from "@/components/front/TrickOrTreatPost.vue";
 import Footer from "@/components/front/Footer.vue";
 import { Head } from "@inertiajs/vue3";
 import NewBanner from "@/components/front/NewBanner.vue";
@@ -45,14 +45,20 @@ console.log(props.media);
 </script>
 
 <template>
-  <Head title="Home">
+  <!-- <Head title="Home">
     <meta name="description" content="Dashboard" />
     <link v-if="colors" rel="icon" alt="Foto logo" :href="`/images/${colors.file}`" />
-  </Head>
+  </Head> -->
   <div class="container overflow-x-hidden" :style="{ background: colors ? colors.color1 : '' }">
-    <NavbarPost />
+    <NavbarPost 
+      :canLogin="canLogin"
+      :canRegister="canRegister"
+      :isAuth="$page.props.auth.user"
+      :colors="colors"
+      :company="company"
+    />
     <a href="company/colors">
-      <div class="flex flex-col mt-20" v-if="colors">
+      <div class="flex flex-col" v-if="colors">
         <p :style="{ color: colors.color4 }"></p>
         <div class="w-60 h-12 flex">
           <div class="rounded-full border-solid border-2 border-black h-12 w-12 bg-[#722727]"
@@ -68,14 +74,40 @@ console.log(props.media);
         </div>
       </div>
     </a>
-    <TrickOrTreat :colors="colors" />
+    <TrickOrTreatPost :colors="colors" name="Youtube Posts" />
+    <TrickOrTreatPost :colors="colors" name="Instagram Posts"/>
     <Footer :colors="colors" :company="company" />
     <NewBanner v-if="media != null" :colors="colors" :media="redesSociales" />
   </div>
 </template>
 
+
 <style>
-body {
-  overflow-x: hidden;
+@media (min-width: 768px) {
+    .container {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    @media (min-width: 1024px) {
+        .container {
+            max-width: 100%;
+            margin: 0;
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .container {
+            max-width: 100%;
+            margin: 0;
+        }
+    }
+
+    @media (min-width: 1536px) {
+        .container {
+            max-width: 100%;
+            margin: 0;
+        }
+    }
 }
 </style>

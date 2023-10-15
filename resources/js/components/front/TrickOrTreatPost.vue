@@ -5,14 +5,19 @@
     colors: {
       type: Object,
       required: false,
-    }
+    },
+    name: {
+      type: String,
+      required: false,
+    },
+    
   })
 
 </script>
 
 <template>
-  <section id="trick-or-treat" class="flex flex-col items-center py-32">
-    <h2 class="mt-10 mb-28 text-5xl md:text-6xl font-bold text-black" :style="{color: colors ? colors.color4 : '',}">Clubes que nos apoyan</h2>
+  <section id="trick-or-treat" class="flex flex-col items-center pb-32">
+    <h2 class="mt-10 mb-28 text-5xl md:text-6xl font-bold text-black" :style="{color: colors ? colors.color4 : '',}">{{name}}</h2>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-10">
       <div 
         v-for="(tot, i) of tots" 
