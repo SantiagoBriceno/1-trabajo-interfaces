@@ -36,6 +36,11 @@ export default [
         label: "Social Media",
         icon: mdiSquareEditOutline,
         href: "/company/media" //Colocar la ruta del cuarto Formulario
+      }, 
+      {
+        label: "Posts and Videos",
+        icon: mdiSquareEditOutline,
+        href: "/company/post" //Colocar la ruta del cuarto Formulario
       }
     ],
   },

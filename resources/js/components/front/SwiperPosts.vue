@@ -51,7 +51,7 @@ onMounted(() => {
       :class="i === 1 && 'from-primary-200/50 to-primary-200/30 lg:-translate-y-10 '"
       :style="{ background: colors ? `${colors.color2}` : '', }">
       <iframe v-if="post.type === 'youtube'" class="w-full h-full overflow-hidden overflow-y-hidden"
-        :src="`http://www.youtube.com/embed/${separateId(post.url)}?enablejsapi=1&origin=http://example.com`"
+        :src="`http://www.youtube.com/embed/${separateId(post.url)}?autoplay=1&mute=1`"
         title="YouTube video player" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen></iframe>
