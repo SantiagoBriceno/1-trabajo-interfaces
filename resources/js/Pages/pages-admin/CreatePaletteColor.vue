@@ -104,7 +104,8 @@ const editColors = (event) => {
     editData.file = img;
 
     if(validarURL(editData.ubication)){
-        router.put("/company/colors", editData, {
+        console.log(editData);
+        router.post("/company/colors", editData, {
             forceFormData: true,
             preserveScroll: true,
             onSuccess: () => {

@@ -59,7 +59,7 @@ const submit = () => {
       >
         <FormValidationErrors />
 
-        <FormField label="Name" label-for="name" help="Please enter your name">
+        <FormField label="Nombre" label-for="name" help="Coloca tu nombre">
           <FormControl
             v-model="form.name"
             id="name"
@@ -73,7 +73,7 @@ const submit = () => {
         <FormField
           label="Email"
           label-for="email"
-          help="Please enter your email"
+          help="Por favor, ingresa tu email"
         >
           <FormControl
             v-model="form.email"
@@ -86,9 +86,9 @@ const submit = () => {
         </FormField>
 
         <FormField
-          label="Password"
+          label="Contraseña"
           label-for="password"
-          help="Please enter new password"
+          help="Por favor, ingresa tu contraseña"
         >
           <FormControl
             v-model="form.password"
@@ -101,9 +101,9 @@ const submit = () => {
         </FormField>
 
         <FormField
-          label="Confirm Password"
+          label="Confirma tu contraseña"
           label-for="password_confirmation"
-          help="Please confirm your password"
+          help="Por favor, confirma tu contraseña"
         >
           <FormControl
             v-model="form.password_confirmation"
@@ -119,7 +119,7 @@ const submit = () => {
           v-if="hasTermsAndPrivacyPolicyFeature"
           v-model="form.terms"
           name="remember"
-          :options="{ agree: 'I agree to the Terms' }"
+          :options="{ agree: 'Yo acepto los terminos' }"
         />
 
         <BaseDivider />
@@ -129,11 +129,11 @@ const submit = () => {
             :style="{backgroundColor: colors ? colors.color3 : '', color: colors ? colors.color4 : '' }"
             type="submit"
             color="info"
-            label="Register"
+            label="Registrarse"
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
           />
-          <BaseButton route-name="login" color="info" outline label="Login" :style="{backgroundColor: colors ? colors.color3 : '', color: colors ?  colors.color4 : ''}" />
+          <BaseButton route-name="login" color="info" outline label="Iniciar sesión" :style="{backgroundColor: colors ? colors.color3 : '', color: colors ?  colors.color4 : ''}" />
         </BaseButtons>
       </CardBox>
     </SectionFullScreen>

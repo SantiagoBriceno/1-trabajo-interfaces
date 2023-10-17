@@ -28,17 +28,17 @@ export default [
         href: "/company/wizard" //Colocar la ruta del segundo Formulario
       },
       {
-        label: "Colors",
+        label: "Colores",
         icon: mdiSquareEditOutline,
         href: "/company/colors" //Colocar la ruta del tercer Formulario
       },
       {
-        label: "Social Media",
+        label: "Redes sociales",
         icon: mdiSquareEditOutline,
         href: "/company/media" //Colocar la ruta del cuarto Formulario
-      }, 
+      },
       {
-        label: "Posts and Videos",
+        label: "Publicaciones",
         icon: mdiSquareEditOutline,
         href: "/company/post" //Colocar la ruta del cuarto Formulario
       }

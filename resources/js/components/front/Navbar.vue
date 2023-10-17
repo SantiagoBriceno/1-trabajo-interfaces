@@ -80,6 +80,7 @@ defineProps({
         <a @click="showMenu = false" class="text-white font-medium" href="#category" :style="{color: colors ? colors.color4 : '',}">Categorías</a>
         <a @click="showMenu = false" class="text-white font-medium" href="#trick-or-treat" :style="{color: colors ? colors.color4 : '',}">Clubes</a>
         <a @click="showMenu = false" class="text-white font-medium" href="#footer" :style="{color: colors ? colors.color4 : '',}">Footer</a>
+        <a @click="showMenu = false" class="text-white font-medium" href="index/post" :style="{color: colors ? colors.color4 : '',}">Post</a>
 
 
         <div v-if= "canLogin" class = "flex gap-1.5">
