@@ -6,7 +6,7 @@ import LayoutAuthenticated from "@/Layouts/LayoutAuthenticated.vue";
 import { ref, computed, onMounted } from "vue";
 
 const props = defineProps({
-  colors: { type: Object },
+  colors: { type: Object, required: false },
   post: { type: Array },
 });
 
@@ -50,23 +50,25 @@ const deleteItem = (index) => {
     <meta name="description" content="Mis colores" />
     <link v-if="colors[0] != null" rel="icon" :href="`/images/${colors[0].file}`" />
   </Head>
-  <LayoutAuthenticated :colors="passData">
+  <LayoutAuthenticated :colors="colors">
     <SectionMain>
-      <form @submit.prevent="submitForm">
-        <div>
-          <label for="type">Tipo:</label>
-          <select id="type" v-model="editData.type">
+      <form class="grid grid-cols-3 align-middle text-center" @submit.prevent="submitForm">
+        <div class="m-10 text-center gap-10">
+          <label class="mr-10" for="type">Tipo:</label>
+          <select class="rounded-md" :style="{color: colors ? colors.color5 : '#fff'}" id="type" v-model="editData.type">
             <option value="youtube">Youtube</option>
             <option value="instagram">Instagram</option>
           </select>
         </div>
-        <div>
-          <label for="url">URL:</label>
-          <input type="text" id="url" v-model="editData.url" :class="{ valid: isValidUrl, inValid: !isValidUrl }" />
+        <div class="m-10 text-center gap-10">
+          <label class="mr-10" for="url">URL:</label>
+          <input class="rounded-md w-2-3" type="text" id="url" :style="{color: colors ? colors.color5 : '#fff'}" v-model="editData.url" :class="{ valid: isValidUrl, inValid: !isValidUrl }" />
         </div>
-        <button type="submit">Enviar</button>
+        <button class="md:block px-8 py-3 text-white font-medium tracking-wider uppercase bg-secondary mt-10 h-fit lg:w-fit ml-14 rounded-md mx-2" type="submit"
+          :style="{background: colors ? colors.color3 : '', color: colors ? colors.color4 : '#fff'}"
+        >Enviar</button>
       </form>
-      <table>
+        <table class="translate-x-20">
         <thead>
           <tr>
             <th>Tipo</th>
@@ -84,6 +86,7 @@ const deleteItem = (index) => {
           </tr>
         </tbody>
       </table>
+      
 
     </SectionMain>
   </LayoutAuthenticated>
