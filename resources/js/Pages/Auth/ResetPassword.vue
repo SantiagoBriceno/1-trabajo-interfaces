@@ -30,7 +30,7 @@ const form = useForm({
 
 const submit = () => {
   form
-    .post(route('password.update'), {
+    .post(route('password.store'), {
       onFinish: () => form.reset('password', 'password_confirmation'),
     })
 }
@@ -54,7 +54,7 @@ const submit = () => {
         <FormField
           label="Email"
           label-for="email"
-          help="Please enter your email"
+          help="Por favor, ingresa tu contraseña"
         >
           <FormControl
             v-model="form.email"
@@ -69,7 +69,7 @@ const submit = () => {
         <FormField
           label="Password"
           label-for="password"
-          help="Please enter new password"
+          help="Por favor, ingresa tu nueva contraseña"
         >
           <FormControl
             v-model="form.password"
@@ -84,7 +84,7 @@ const submit = () => {
         <FormField
           label="Confirm Password"
           label-for="password_confirmation"
-          help="Please confirm new password"
+          help="Por favor, confirma tu nueva contraseña"
         >
           <FormControl
             v-model="form.password_confirmation"

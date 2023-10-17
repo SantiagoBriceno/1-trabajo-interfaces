@@ -75,8 +75,8 @@ defineProps({
         "
         :class="!showMenu ? 'translate-y-[-150%]' : '-translate-y-0'"
       >
-        <a @click="showMenu = false" class="text-white font-medium" href="#home" :style="{color: colors ? colors.color4 : '',}">Youtube Videos</a>
-        <a @click="showMenu = false" class="text-white font-medium" href="#category" :style="{color: colors ? colors.color4 : '',}">Instagram Post</a>
+        <a @click="showMenu = false" class="text-white font-medium" href="#home" :style="{color: colors ? colors.color4 : '',}">Youtube</a>
+        <a @click="showMenu = false" class="text-white font-medium" href="#category" :style="{color: colors ? colors.color4 : '',}">Instagram</a>
         <a @click="showMenu = false" class="text-white font-medium" :href="route('index')" :style="{color: colors ? colors.color4 : '',}">Home</a>
 
         <div v-if= "canLogin" class = "flex gap-1.5">

@@ -226,6 +226,7 @@ Route::middleware('auth.admin')->post('company/colors', function () {
             $colors->file = $filename;
             $file->move(public_path('images'), $filename);
         }
+        $colors->ubication = request()->ubication ?? $colors->ubication;
         $colors->save();
         return redirect()->route('colors.edit');
     }
@@ -247,7 +248,7 @@ Route::middleware('auth.admin')->patch('company/colors', function () {
         $colors->file = $filename;
         $file->move(public_path('images'), $filename);
     }
-    $colors->ubicacion = request()->ubicacion ?? $colors->ubicacion;
+    $colors->ubication = request()->ubication ?? $colors->ubication;
     $colors->save();
     return redirect()->route('colors.edit');
 })->name('colors.edit');

@@ -16,7 +16,7 @@ defineProps({
 <template>
     <section id="home" class="grid place-items-center overflow-hidden">
         <div
-            class="grid grid-flow-row-dense grid-cols-1 lg:grid-cols-2  w-full px-0 lg:px-10 place-items-center items-center text-center justify-centertext-center p-4 rounded-md mt-20 text-black bg-gradient-to-b from-primary-200/20 to-primary-200/10 bg-transparent"
+            class="grid grid-flow-row-dense grid-cols-1 lg:grid-cols-2 ml-10 mr-10 w-full px-0 lg:px-10 place-items-center items-center text-center justify-centertext-center p-4 rounded-md mt-20 text-black bg-gradient-to-b from-primary-200/20 to-primary-200/10 bg-transparent"
             :style="{ background: colors ? `${colors.color2}` : '' }"
         >
             <div

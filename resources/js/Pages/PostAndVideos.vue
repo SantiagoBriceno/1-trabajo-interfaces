@@ -55,7 +55,7 @@ console.log(postYoutube);
 </script>
 
 <template>
-  <Head title="Post">
+  <Head title="Publicaciones">
     <meta name="description" content="Dashboard" />
     <link v-if="colors" rel="icon" alt="Foto logo" :href="`/images/${colors.file}`" />
   </Head>
@@ -84,8 +84,8 @@ console.log(postYoutube);
         </div>
       </div>
     </a>
-    <HomePosts :colors="colors" name="Youtube Posts" :post="postYoutube"/>
-    <HomePosts :colors="colors" name="Instagram Posts" :post="postInstagram"/>
+    <HomePosts :colors="colors" name="Publicaciones de Youtube" :post="postYoutube"/>
+    <HomePosts :colors="colors" name="Publicaciones de Instagram" :post="postInstagram"/>
     <Footer :colors="colors" :company="company" />
     <NewBanner v-if="media != null" :colors="colors" :media="redesSociales" />
   </div>
